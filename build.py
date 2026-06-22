@@ -6,7 +6,7 @@ navy #0E1121 / lavanda #F5F5F6), motor de slides del Deck Maestro AECODE.
 Cada concepto: cómo funciona · analogía · ejemplo real (grandes startups + AECODE).
 Autocontenido: un solo index.html.  Ejecutar:  python build.py
 """
-import html, datetime, pathlib
+import html, datetime, pathlib, math
 
 def esc(s): return html.escape(str(s))
 
@@ -37,6 +37,121 @@ def table(headers, rows, hi=None):
     return f'<div class="table-wrap reveal"><table class="dt"><thead><tr>{th}</tr></thead><tbody>{body}</tbody></table></div>'
 def quote(t):
     return f'<blockquote class="bigquote reveal">{t}</blockquote>'
+
+# ---------- diagramas / ilustraciones (SVG + CSS animado) ----------
+def dgm(inner, cls=""):
+    return f'<div class="dgm {cls} reveal">{inner}</div>'
+
+def ring_cycle(nodes, c_top, c_bot, flywheel=False):
+    """Ciclo circular animado (lean loop, growth loop, flywheel)."""
+    n=len(nodes); R=39; tones=["violet","blue","green"]
+    nh=""
+    for i,(lab,sub) in enumerate(nodes):
+        ang=math.radians(-90+i*360.0/n)
+        x=50+R*math.cos(ang); y=50+R*math.sin(ang)
+        nh+=(f'<div class="rc-node tone-{tones[i%3]}" style="left:{x:.1f}%;top:{y:.1f}%">'
+             f'<b>{lab}</b><span>{sub}</span></div>')
+    svg=('<svg viewBox="0 0 200 200" class="rc-svg" aria-hidden="true">'
+         '<circle cx="100" cy="100" r="74" class="rc-track"/>'
+         '<g class="rc-arcg"><circle cx="100" cy="100" r="74" class="rc-arc"/></g>'
+         '<g class="rc-run"><circle cx="100" cy="26" r="6" class="rc-dot"/></g></svg>')
+    center=f'<div class="rc-center"><b>{c_top}</b><span>{c_bot}</span></div>'
+    return dgm(f'<div class="ring-cycle {"fly" if flywheel else ""}">{svg}{center}{nh}</div>',"d-ring")
+
+def tamsamsom(items):
+    """Anillos concéntricos TAM/SAM/SOM."""
+    legend="".join(
+        f'<div class="tss-leg"><span class="dot d{i}"></span><div><b>{l}</b> · {v}<small>{d}</small></div></div>'
+        for i,(l,v,d) in enumerate(items))
+    rings=('<div class="tss-rings"><div class="ring r0"><span>TAM</span></div>'
+           '<div class="ring r1"><span>SAM</span></div>'
+           '<div class="ring r2"><span>SOM</span></div></div>')
+    return dgm(f'<div class="tss">{rings}<div class="tss-legend">{legend}</div></div>',"d-tss")
+
+def curve(kind="pmf"):
+    """Curva animada: pmf (palo de hockey) o jcurve (valle de la muerte)."""
+    if kind=="pmf":
+        pre='M22,168 C90,166 150,160 232,150'; post='M232,150 C300,140 350,92 462,20'
+        mark='<line x1="232" y1="22" x2="232" y2="178" class="cv-mark"/><circle cx="232" cy="150" r="6" class="cv-pt"/>'
+        leg=('<div class="cv-legend"><span class="l-pre">Antes · tú empujas</span>'
+             '<span class="l-pmf">PMF</span><span class="l-post">Después · te jalan</span></div>')
+    else:
+        pre='M22,60 C90,90 150,150 232,160'; post='M232,160 C320,168 380,110 462,22'
+        mark='<line x1="232" y1="22" x2="232" y2="178" class="cv-mark"/><circle cx="232" cy="160" r="6" class="cv-pt"/>'
+        leg=('<div class="cv-legend"><span class="l-pre">Inversión · valle de la muerte</span>'
+             '<span class="l-pmf">Punto bajo</span><span class="l-post">Escala · retorno</span></div>')
+    svg=(f'<svg viewBox="0 0 484 196" class="cv-svg" aria-hidden="true">'
+         f'<line x1="22" y1="178" x2="462" y2="178" class="cv-axis"/>'
+         f'<line x1="22" y1="178" x2="22" y2="14" class="cv-axis"/>'
+         f'<path d="{pre}" class="cv-pre draw"/><path d="{post}" class="cv-post draw"/>{mark}</svg>')
+    return dgm(f'<div class="curve">{svg}{leg}</div>',"d-curve")
+
+def funnel_v(stages):
+    """Embudo vertical (AARRR u otros). stages: (label, width%, metric, tone)."""
+    rows=""
+    for lab,w,m,t in stages:
+        rows+=(f'<div class="fnl-row band-{t}" style="--w:{w}%"><span>{lab}</span><b>{m}</b></div>')
+    return dgm(f'<div class="fnl">{rows}</div>',"d-fnl")
+
+def scale_compare(cac, ltv, ratio):
+    """Comparativa CAC vs LTV con badge de ratio."""
+    body=(f'<div class="sc-row"><div class="sc-lab">CAC<small>cuesta conseguirlo</small></div>'
+          f'<div class="sc-track"><i class="sc-bar sc-cac" style="--w:18%"></i></div>'
+          f'<b class="sc-val sc-vcac">{cac}</b></div>'
+          f'<div class="sc-row"><div class="sc-lab">LTV<small>vale el cliente</small></div>'
+          f'<div class="sc-track"><i class="sc-bar sc-ltv" style="--w:90%"></i></div>'
+          f'<b class="sc-val sc-vltv">{ltv}</b></div>'
+          f'<div class="sc-badge">{ratio}<span>regla sana</span></div>')
+    return dgm(f'<div class="scale">{body}</div>',"d-scale")
+
+def canvas_mini(cells):
+    """Mini Business Model Canvas 3x3. cells: list de (label, tone)."""
+    cs="".join(f'<div class="cv-cell tone-{t}">{l}</div>' for l,t in cells)
+    return dgm(f'<div class="bmc">{cs}</div>',"d-bmc")
+
+def fund_bars(stages):
+    """Barras crecientes de rondas. stages: (label, height%, amount, tone)."""
+    cols=""
+    for lab,h,amt,t in stages:
+        cols+=(f'<div class="fund-col"><b class="fund-amt tone-{t}">{amt}</b>'
+               f'<div class="fund-bar band-{t}" style="--h:{h}%"></div>'
+               f'<span class="fund-lab">{lab}</span></div>')
+    return dgm(f'<div class="fund">{cols}</div>',"d-fund")
+
+def moat_layers(layers):
+    """Capas concéntricas de defensibilidad (outer→core)."""
+    inner=""
+    for lab,sub in reversed(layers):
+        inner=f'<div class="moat-l"><b>{lab}</b><span>{sub}</span>{inner}</div>'
+    return dgm(f'<div class="moat">{inner}</div>',"d-moat")
+
+def timeline_h(items):
+    """Línea de tiempo horizontal. items: (etapa, detalle, win)."""
+    n=len(items); cells=""
+    for et,det,win in items:
+        cells+=(f'<div class="th-item {"win" if win else ""}"><div class="th-dot"></div>'
+                f'<div class="th-stage">{et}</div><div class="th-meta">{det}</div></div>')
+    return dgm(f'<div class="th" style="grid-template-columns:repeat({n},1fr)">{cells}</div>',"d-th")
+
+def concept_web(center, spokes):
+    """Hub de relaciones: centro + radios animados."""
+    n=len(spokes); R=41; lines=""; nodes=""
+    for i,(lab,tone) in enumerate(spokes):
+        ang=math.radians(-90+i*360.0/n)
+        x=50+R*math.cos(ang); y=50+(R*1.0)*math.sin(ang)
+        lines+=(f'<line x1="50" y1="50" x2="{x:.1f}" y2="{y:.1f}" class="cw-line" '
+                f'vector-effect="non-scaling-stroke"/>')
+        nodes+=f'<div class="cw-node tone-{tone}" style="left:{x:.1f}%;top:{y:.1f}%">{lab}</div>'
+    svg=f'<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="cw-svg">{lines}</svg>'
+    return dgm(f'<div class="concept-web">{svg}{nodes}<div class="cw-center">{center}</div></div>',"d-web")
+
+def ladder(steps):
+    """Escalera ascendente principiante→experto. steps: (nivel, titulo, desc, height%)."""
+    cols=""
+    for lvl,ti,de,h in steps:
+        cols+=(f'<div class="ld-step" style="--h:{h}%"><div class="ld-lvl">{lvl}</div>'
+               f'<div class="ld-h">{ti}</div><div class="ld-d">{de}</div></div>')
+    return dgm(f'<div class="ladder">{cols}</div>',"d-ladder")
 
 # ---------- definición de slides ----------
 SLIDES=[]
@@ -104,6 +219,43 @@ S("dark","Mapa de la guía","table", f"""
    ["<b>9</b>","Fundraising y capital","Cómo se financia una startup","81–90"],
    ["<b>10</b>","Escala y experto","De startup a categoría y exit","91–100"],
   ], hi=[0,1])}
+""")
+
+# ======================= SÍNTESIS · EL VIAJE =======================
+S("dark","El viaje de la startup","synthwide", f"""
+  {kicker("Cómo encaja todo")}
+  {title('El <span class="grad">viaje</span> de una startup, etapa por etapa')}
+  {timeline_h([
+    ("Idea & Problema","Niveles 1 · qué resolver", False),
+    ("Cliente & Mercado","Nivel 2 · para quién", False),
+    ("MVP & Validación","Niveles 1–3 · construye y prueba", False),
+    ("Product-Market Fit","Nivel 3 · el mercado te jala", True),
+    ("Modelo & Unit Econ.","Niveles 4–5 · cómo ganas", False),
+    ("Métricas & Growth","Niveles 6–7 · cómo escalas", False),
+    ("Defensa & Capital","Niveles 8–9 · foso y fondos", False),
+    ("Escala & Exit","Nivel 10 · categoría y salida", True),
+  ])}
+  {lead('No memorices 100 términos sueltos: cada nivel resuelve <b>una etapa</b> del viaje. Ubica dónde estás hoy, domina esa etapa y usa el resto como <i>mapa</i> de lo que viene.')}
+""")
+
+# ======================= SÍNTESIS · CONEXIONES =======================
+S("light","Cómo se conectan","synthwide", f"""
+  {kicker("El mapa de relaciones")}
+  {title('100 conceptos, <span class="grad">una sola red</span>')}
+  <div class="split">
+    <div class="split-l">{concept_web("PROBLEMA real", [
+      ("Solución","violet"),("PMF","green"),("ICP / Cliente","blue"),
+      ("CAC ↔ LTV","violet"),("North Star","green"),("Moat","blue"),
+      ("Growth","violet"),("Capital","green")])}</div>
+    <div class="split-r">
+      {lead('Los conceptos no viven sueltos: forman <b>cadenas</b>. Dominar startups es ver cómo unos jalan a otros.')}
+      {grid([
+        card("Cadena de valor",'Problema → Solución → <b>PMF</b>. Sin dolor real no hay solución que pegue, y sin encaje no hay negocio.', tag="①"),
+        card("Cadena económica",'CAC → LTV → Churn → <b>Runway</b>. Lo que cuesta y vale un cliente decide cuánto vives.', tag="②", tone="blue"),
+        card("Cadena de defensa",'Red + costos de cambio + datos → <b>Moat</b> → Flywheel. Así nadie te copia.', tag="③", tone="green"),
+      ], 3, "cards-sm")}
+    </div>
+  </div>
 """)
 
 # ======================= NIVELES Y CONCEPTOS =======================
@@ -568,16 +720,103 @@ LEVELS = [
    ]),
 ]
 
-# ---- emitir dividers + conceptos ----
+# ---- intro de nivel enriquecida (lista lo que verás) ----
+def level_intro(L, start):
+    chips=""
+    for i,c in enumerate(L["concepts"]):
+        chips+=f'<span class="li-item"><span class="li-n">{start+i:02d}</span>{esc(c[0])}</span>'
+    content=f"""
+  <div class="div-index reveal">{L['no']:02d}</div>
+  <h2 class="div-title reveal">{L['title']}</h2>
+  <p class="div-sub reveal">{L['sub']}</p>
+  <div class="li-list reveal">{chips}</div>
+"""
+    S(L["theme"], L["name"], "divider", content)
+
+# ---- síntesis visual por nivel (diagrama animado + cómo se conecta) ----
+SYNTH = {
+ 1: ('El motor de los fundamentos: <span class="grad">Construir → Medir → Aprender</span>',
+     ring_cycle([("Construir","un MVP"),("Medir","con clientes reales"),("Aprender","iterar o pivotar")],"Lean","loop infinito"),
+     'Los fundamentos no son una lista: son un <b>ciclo</b>. Cada vuelta convierte incertidumbre en evidencia y acerca tu idea al mercado.',
+     '<b>Se conecta con:</b> el MVP (09) alimenta el ciclo y el Customer Discovery (10) lo valida; el resultado deseado es el <i>Product-Market Fit</i> del Nivel 3.'),
+ 2: ('Dimensiona el juego: <span class="grad">TAM · SAM · SOM</span>',
+     tamsamsom([("TAM","todo el mercado","el universo total"),("SAM","el que puedes servir","tu modelo y alcance"),("SOM","el que capturarás","realista a corto plazo")]),
+     'Conocer al <b>cliente</b> (ICP, persona, JTBD) sin medir el <b>tamaño</b> del mercado es construir a ciegas. Primero a quién, luego cuán grande.',
+     '<b>Se conecta con:</b> el ICP (12) define tu SAM; el beachhead (17) es tu primer SOM; el «why now» (19) abre la ventana. Lleva al producto del Nivel 3.'),
+ 3: ('La meta de toda startup temprana: <span class="grad">Product-Market Fit</span>',
+     curve("pmf"),
+     'Antes del PMF <b>tú empujas</b> el producto al mercado; después, el mercado <b>te jala</b>. La curva se dobla cuando la retención y el boca a boca despegan.',
+     '<b>Se conecta con:</b> sin PMF, gastar en growth (Nivel 7) es echar agua a un balde roto. El PMF se mide con la retención del Nivel 6.'),
+ 4: ('Cómo capturas valor: el <span class="grad">modelo de negocio</span>',
+     canvas_mini([("Aliados","violet"),("Actividades","blue"),("Propuesta de valor","green"),
+                  ("Recursos","blue"),("Clientes","violet"),("Relación","blue"),
+                  ("Canales","green"),("Costos","violet"),("Ingresos","green")]),
+     'El modelo conecta <b>a quién sirves</b> con <b>cómo cobras</b>. Pricing, freemium, SaaS o marketplace son distintas formas de capturar el valor que creas.',
+     '<b>Se conecta con:</b> el modelo define tus ingresos, que alimentan los unit economics del Nivel 5. El B2B2C (38) es el modelo de AECODE.'),
+ 5: ('La pregunta que decide todo: <span class="grad">¿gana cada cliente?</span>',
+     scale_compare("US$35","≈US$110","3.1×"),
+     'Si el <b>LTV</b> (lo que vale un cliente) supera al <b>CAC</b> (lo que cuesta) por <b>3× o más</b>, el negocio escala sano. Si no, crecer solo multiplica pérdidas.',
+     '<b>Se conecta con:</b> el CAC baja con growth orgánico (Nivel 7); el LTV sube con retención (Nivel 6). El burn y runway marcan el reloj de la caja.'),
+ 6: ('Mide lo que importa: el embudo <span class="grad">AARRR</span>',
+     funnel_v([("Adquisición","100","llegan","violet"),("Activación","62","primer valor","blue"),
+               ("Retención","40","vuelven","green"),("Revenue","26","pagan","violet"),
+               ("Referido","16","recomiendan","green")]),
+     'Las «pirate metrics» te dicen <b>exactamente dónde</b> pierdes usuarios. Optimizar una etapa rinde más que gastar más arriba del embudo.',
+     '<b>Se conecta con:</b> la North Star (52) resume el embudo en una métrica; la retención (55) es la etapa que más predice el PMF.'),
+ 7: ('Crece en bucle: el <span class="grad">growth loop</span>',
+     ring_cycle([("Usuario","obtiene valor"),("Comparte","invita / evidencia"),("Atrae","nuevos usuarios"),("Activa","y vuelve a empezar")],"Loop","crecimiento compuesto"),
+     'El crecimiento de élite no es un embudo lineal, es un <b>bucle</b>: cada usuario produce el siguiente. Así operan PLG, viralidad y network effects.',
+     '<b>Se conecta con:</b> el viral loop (63) y los network effects (64) hacen girar el bucle; un buen GTM (66) lo arranca. Refuerza el moat del Nivel 8.'),
+ 8: ('Por qué nadie te copia: el <span class="grad">moat</span>',
+     moat_layers([("Marca & comunidad","te eligen por confianza"),("Costos de cambio","irse cuesta caro"),("Efecto red","más valor con más gente"),("Datos / producto","núcleo que mejora solo")]),
+     'Un foso es una ventaja que <b>se acumula con el tiempo</b>. Se construye por capas: red, costos de cambio, datos y marca lo hacen casi imposible de replicar.',
+     '<b>Se conecta con:</b> los network effects (64) y switching costs (74) forman el foso; el flywheel (73) lo hace girar. Es lo que defiende tu categoría (100).'),
+ 9: ('Combustible por etapas: el <span class="grad">fundraising</span>',
+     fund_bars([("Pre-seed","20","idea","violet"),("Seed","38","PMF temprano","blue"),
+                ("Serie A","60","escalar","green"),("Serie B","82","expandir","violet"),
+                ("Serie C","100","dominar","green")]),
+     'El capital llega por <b>rondas crecientes</b>, cada una atada a un hito. Levantas valoración a cambio de equity, y la dilución se compensa si la torta crece.',
+     '<b>Se conecta con:</b> cada ronda compra runway (Nivel 5) para alcanzar el siguiente hito; la tracción del Nivel 6 sostiene tu valoración y el due diligence (90).'),
+ 10:('De startup a categoría: la <span class="grad">curva J</span> al exit',
+     curve("jcurve"),
+     'Escalar implica un <b>valle</b> (inviertes y quemas) antes del despegue. Quien sobrevive el valle y compone ventajas llega a la escala, la categoría y el exit.',
+     '<b>Se conecta con:</b> el blitzscaling (92) acelera la subida; el compounding (96) la sostiene; el M&A (97), IPO (99) y la categoría (100) materializan el valor.'),
+}
+def level_synth(L):
+    ttl,d,body,rel = SYNTH[L["no"]]
+    content=f"""
+  {kicker("Síntesis visual · "+L["name"])}
+  {title(ttl)}
+  <div class="split synth-split">
+    <div class="split-l">{d}</div>
+    <div class="split-r">{lead(body)}{note(rel)}</div>
+  </div>"""
+    S(L["theme"], L["name"], "synth", content)
+
+# ---- emitir intro + conceptos + síntesis por nivel ----
 num = 0
 for L in LEVELS:
-    divider(L["no"], L["theme"], L["name"], L["title"], L["sub"])
+    level_intro(L, num+1)
     for c in L["concepts"]:
         num += 1
         name, eng, works, analogy, example, ex_tag = c[0], c[1], c[2], c[3], c[4], c[5]
         formula = c[6] if len(c) > 6 else None
         concept(num, L["name"], name, eng, works, analogy, example, ex_tag,
                 formula=formula, theme=L["theme"])
+    level_synth(L)
+
+# ======================= RUTA DE DOMINIO =======================
+S("light","Tu ruta de dominio","synthwide", f"""
+  {kicker("De principiante a experto")}
+  {title('Tu <span class="grad">ruta</span> de dominio en 4 escalones')}
+  {ladder([
+    ("N1–3","Principiante","Entiendes el problema, validas y llegas a PMF. Hablas el idioma.","32"),
+    ("N4–6","Operador","Diseñas modelo, cuidas unit economics y mides crecimiento real.","56"),
+    ("N7–8","Estratega","Construyes growth en bucle y un foso que nadie puede copiar.","80"),
+    ("N9–10","Experto · Founder","Financias, escalas, defines categoría y materializas el valor.","100"),
+  ])}
+  {lead('Sube un escalón a la vez: cada uno <b>asume el anterior</b>. No necesitas saberlo todo hoy — necesitas saber <i>en qué escalón estás</i> y cuál es el siguiente.')}
+""")
 
 # ======================= CIERRE =======================
 S("dark","Cierre","close", f"""
@@ -751,6 +990,156 @@ body{background:#05060f;color:#fff;overflow:hidden;font-family:Manrope,"Plus Jak
 .close-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:4px}
 .close-h{font-weight:800;font-size:15px;color:var(--accent);letter-spacing:.04em;margin-bottom:9px;text-transform:uppercase}
 .close-cta{font-weight:700;font-size:15px;color:var(--fg);margin-top:6px;padding-top:14px;border-top:1px solid var(--line)}
+/* ===== synth layouts + level intro ===== */
+.layout-synth,.layout-synthwide{justify-content:center;gap:16px}
+.synth-split{align-items:center;gap:30px}
+.dgm{width:100%;display:flex;justify-content:center;align-items:center}
+.card{transition:transform .25s var(--ease),box-shadow .25s var(--ease),opacity .5s var(--ease-out)}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(74,58,193,.16)}
+@media (hover:none){.card:hover{transform:none;box-shadow:none}}
+.li-list{display:flex;flex-wrap:wrap;gap:8px;max-width:94ch;margin-top:8px}
+.li-item{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--fg);
+  background:var(--chip-bg);border:1px solid var(--card-line);padding:7px 13px;border-radius:100px}
+.li-n{font-weight:800;color:var(--accent3);font-variant-numeric:tabular-nums}
+.band-violet{background:linear-gradient(100deg,#5a4ad0,#4a3ac1)} .band-blue{background:linear-gradient(100deg,#4465ee,#3f7be0)}
+.band-green{background:linear-gradient(100deg,#26b96f,#1fa9a0)}
+/* keyframes */
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes drawline{to{stroke-dashoffset:0}}
+@keyframes grow-line{to{width:90%}}
+/* ring cycle */
+.ring-cycle{position:relative;width:340px;height:300px;max-width:100%}
+.rc-svg{position:absolute;inset:0;width:100%;height:100%}
+.rc-track{fill:none;stroke:var(--card-line);stroke-width:2;stroke-dasharray:2 7}
+.rc-arc{fill:none;stroke:var(--accent2);stroke-width:3;stroke-linecap:round;stroke-dasharray:330 465;opacity:.55}
+.rc-arcg{transform-origin:100px 100px} .slide.active .rc-arcg{animation:spin 11s linear infinite}
+.rc-run{transform-origin:100px 100px} .slide.active .rc-run{animation:spin 6s linear infinite}
+.rc-dot{fill:var(--accent3)}
+.fly .rc-arc{stroke-dasharray:150 465;opacity:.7} .slide.active .fly .rc-arcg{animation:spin 4.5s linear infinite}
+.rc-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;width:118px}
+.rc-center b{display:block;font-weight:800;font-size:19px;color:var(--fg);line-height:1} .rc-center span{font-size:11px;color:var(--muted)}
+.rc-node{position:absolute;transform:translate(-50%,-50%);width:108px;text-align:center;background:var(--card);
+  border:1px solid var(--card-line);border-radius:12px;padding:9px 7px;box-shadow:0 6px 18px rgba(20,18,60,.10)}
+.rc-node b{display:block;font-size:13.5px;font-weight:800;color:var(--fg);line-height:1.12} .rc-node span{font-size:10.5px;color:var(--muted);line-height:1.18}
+.rc-node.tone-violet{border-top:3px solid var(--accent)} .rc-node.tone-blue{border-top:3px solid var(--accent2)} .rc-node.tone-green{border-top:3px solid var(--accent3)}
+/* tam sam som */
+.tss{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.tss-rings{position:relative;width:210px;height:210px;flex:none}
+.ring{position:absolute;border-radius:50%;display:grid;place-items:start center;padding-top:9px;font-weight:800;font-size:12px;left:50%;top:50%;transform:translate(-50%,-50%)}
+.ring span{color:#fff;letter-spacing:.1em}
+.ring.r0{width:210px;height:210px;background:rgba(74,58,193,.18);border:1px solid var(--violet)}
+.ring.r1{width:144px;height:144px;background:rgba(68,101,238,.26);border:1px solid var(--blue)}
+.ring.r2{width:80px;height:80px;background:var(--green);border:1px solid var(--green);place-items:center;padding:0}
+.is-light .ring.r0 span,.is-light .ring.r1 span{color:#2a2470}
+.tss-legend{display:flex;flex-direction:column;gap:11px;flex:1;min-width:200px}
+.tss-leg{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--muted)}
+.tss-leg .dot{width:14px;height:14px;border-radius:4px;margin-top:3px;flex:none}
+.tss-leg .d0{background:var(--violet)} .tss-leg .d1{background:var(--blue)} .tss-leg .d2{background:var(--green)}
+.tss-leg b{color:var(--fg);font-weight:800} .tss-leg small{display:block;color:var(--muted);font-size:12px}
+/* curve */
+.curve{width:100%;max-width:520px;display:flex;flex-direction:column;gap:8px}
+.cv-svg{width:100%;height:auto}
+.cv-axis{stroke:var(--card-line);stroke-width:2}
+.cv-pre,.cv-post{fill:none;stroke-linecap:round}
+.cv-pre{stroke:var(--accent);stroke-width:3;opacity:.65} .cv-post{stroke:var(--accent3);stroke-width:4.5}
+.draw{stroke-dasharray:640;stroke-dashoffset:640} .slide.active .draw{animation:drawline 1.7s var(--ease-out) forwards}
+.slide.active .cv-post{animation-delay:.5s}
+.cv-mark{stroke:var(--accent2);stroke-width:1.5;stroke-dasharray:4 4;opacity:.7} .cv-pt{fill:var(--accent2)}
+.cv-legend{display:flex;justify-content:space-between;font-size:12px;font-weight:700}
+.cv-legend .l-pre{color:var(--accent)} .cv-legend .l-pmf{color:var(--accent2)} .cv-legend .l-post{color:var(--accent3)}
+/* funnel */
+.fnl{display:flex;flex-direction:column;gap:8px;align-items:center;width:100%;max-width:480px}
+.fnl-row{width:var(--w);min-width:150px;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:12px 18px;border-radius:10px;color:#fff;transform:scaleX(.6);opacity:0;transform-origin:center;
+  transition:transform .6s var(--ease-out),opacity .6s}
+.slide.active .fnl-row{transform:scaleX(1);opacity:1}
+.fnl-row span{font-weight:800;font-size:14.5px} .fnl-row b{font-size:12px;opacity:.92;font-weight:600}
+/* scale compare */
+.scale{width:100%;max-width:470px;display:flex;flex-direction:column;gap:16px;position:relative}
+.sc-row{display:flex;align-items:center;gap:13px}
+.sc-lab{width:52px;font-weight:800;font-size:16px;color:var(--fg);flex:none}
+.sc-lab small{display:block;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0}
+.sc-track{flex:1;height:26px;border-radius:8px;background:var(--bg2);border:1px solid var(--card-line);overflow:hidden}
+.sc-bar{display:block;height:100%;width:var(--w);transform:scaleX(0);transform-origin:left;transition:transform 1s var(--ease-out);border-radius:8px}
+.sc-cac{background:linear-gradient(100deg,#7b6df0,#4a3ac1)} .sc-ltv{background:linear-gradient(100deg,#26b96f,#1fa9a0)}
+.slide.active .sc-bar{transform:scaleX(1)}
+.sc-val{font-weight:800;font-size:16px;font-variant-numeric:tabular-nums;width:74px;text-align:right;flex:none}
+.sc-vcac{color:var(--accent)} .sc-vltv{color:var(--accent3)}
+.sc-badge{align-self:center;margin-top:2px;font-weight:800;font-size:26px;color:#fff;background:var(--grad3);
+  padding:8px 20px;border-radius:100px;display:flex;align-items:baseline;gap:8px}
+.sc-badge span{font-size:11px;font-weight:700;opacity:.9;text-transform:uppercase;letter-spacing:.1em}
+/* bmc canvas */
+.bmc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:430px}
+.cv-cell{padding:14px 10px;border-radius:11px;font-weight:700;font-size:13px;text-align:center;color:var(--fg);
+  background:var(--card);border:1px solid var(--card-line);min-height:62px;display:grid;place-items:center;line-height:1.2}
+.cv-cell.tone-violet{border-bottom:3px solid var(--accent)} .cv-cell.tone-blue{border-bottom:3px solid var(--accent2)} .cv-cell.tone-green{border-bottom:3px solid var(--accent3)}
+/* fund bars */
+.fund{display:flex;align-items:flex-end;gap:13px;height:240px;width:100%;max-width:460px}
+.fund-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:7px;height:100%;text-align:center}
+.fund-amt{font-weight:800;font-size:13px} .fund-amt.tone-violet{color:var(--accent)} .fund-amt.tone-blue{color:var(--accent2)} .fund-amt.tone-green{color:var(--accent3)}
+.fund-bar{width:100%;border-radius:9px 9px 0 0;height:var(--h);transform:scaleY(0);transform-origin:bottom;transition:transform .9s var(--ease-out)}
+.slide.active .fund-bar{transform:scaleY(1)}
+.fund-lab{font-size:12px;font-weight:700;color:var(--muted)}
+/* moat */
+.moat{width:100%;max-width:430px}
+.moat-l{border:1.5px solid var(--card-line);border-radius:18px;padding:14px 16px 16px;background:var(--card);text-align:center;display:flex;flex-direction:column;gap:6px}
+.moat-l b{font-weight:800;font-size:14.5px;color:var(--fg)} .moat-l span{font-size:11.5px;color:var(--muted)}
+.moat-l .moat-l{margin-top:8px}
+.moat-l:not(:has(.moat-l)){background:var(--grad3);border:none} .moat-l:not(:has(.moat-l)) b{color:#fff} .moat-l:not(:has(.moat-l)) span{color:rgba(255,255,255,.88)}
+/* timeline */
+.th{display:grid;position:relative;width:100%;margin:14px 0 8px}
+.th::before{content:"";position:absolute;left:5%;right:5%;top:8px;height:3px;border-radius:3px;background:var(--card-line)}
+.th::after{content:"";position:absolute;left:5%;top:8px;height:3px;border-radius:3px;background:var(--grad);width:0}
+.slide.active .th::after{animation:grow-line 1.5s var(--ease-out) forwards}
+.th-item{position:relative;padding:0 9px;display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+.th-dot{width:18px;height:18px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--bg),0 0 14px rgba(74,58,193,.4);z-index:2}
+.th-item.win .th-dot{background:var(--accent3);box-shadow:0 0 0 4px var(--bg),0 0 16px rgba(38,185,111,.5)}
+.th-stage{font-weight:800;font-size:14px;color:var(--fg);line-height:1.1} .th-item.win .th-stage{color:var(--accent3)}
+.th-meta{font-size:11.5px;color:var(--muted);line-height:1.3}
+/* concept web */
+.concept-web{position:relative;width:530px;max-width:100%;height:300px}
+.cw-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.cw-line{stroke:var(--card-line);stroke-width:1.5px;stroke-dasharray:600;stroke-dashoffset:600}
+.slide.active .cw-line{animation:drawline 1.2s var(--ease-out) forwards}
+.cw-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--grad);color:#fff;
+  font-weight:800;font-size:13.5px;width:100px;height:100px;border-radius:50%;display:grid;place-items:center;text-align:center;line-height:1.12;z-index:3;box-shadow:0 10px 30px rgba(74,58,193,.4)}
+.cw-node{position:absolute;transform:translate(-50%,-50%);background:var(--card);border:1px solid var(--card-line);
+  border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:800;color:var(--fg);white-space:nowrap;z-index:2;box-shadow:0 4px 14px rgba(20,18,60,.10)}
+.cw-node.tone-violet{border-color:var(--accent);color:var(--accent)} .cw-node.tone-blue{border-color:var(--accent2);color:var(--accent2)} .cw-node.tone-green{border-color:var(--accent3);color:var(--accent3)}
+/* ladder */
+.ladder{display:flex;align-items:flex-end;gap:13px;width:100%;height:300px;margin-top:6px}
+.ld-step{flex:1;height:var(--h);min-height:130px;background:var(--card);border:1px solid var(--card-line);border-bottom:3px solid var(--accent3);
+  border-radius:14px 14px 0 0;padding:16px 15px;display:flex;flex-direction:column;gap:7px;justify-content:flex-start;
+  transform:translateY(18px);opacity:0;transition:transform .6s var(--ease-out),opacity .6s}
+.slide.active .ld-step{transform:none;opacity:1}
+.ld-lvl{align-self:flex-start;font-weight:800;font-size:11px;letter-spacing:.08em;color:var(--accent3);background:var(--chip-bg);border:1px solid var(--card-line);padding:4px 10px;border-radius:100px}
+.ld-h{font-weight:800;font-size:18px;color:var(--accent);line-height:1.1} .ld-d{font-size:13px;color:var(--muted);line-height:1.4}
+/* ===== responsive (reflow en móvil) ===== */
+@media (max-width:860px){
+  body{overflow:auto}
+  .deck{position:static;display:block;height:auto}
+  .stage{transform:none!important;width:100%;height:auto}
+  .slide{position:relative;display:none;height:auto;min-height:100vh;opacity:1!important;visibility:visible}
+  .slide.active{display:grid}
+  .slide-inner{position:relative;padding:62px 20px 76px;justify-content:flex-start;height:auto;min-height:100vh}
+  .layout-cover .slide-inner,.layout-close .slide-inner,.layout-divider .slide-inner,.layout-statement .slide-inner{justify-content:center}
+  .split,.grid-3,.grid-4,.synth-split,.close-cols{grid-template-columns:1fr!important}
+  .s-title,.cover-title,.div-title{font-size:clamp(26px,7vw,40px)}
+  .c-name{font-size:clamp(23px,6.4vw,34px)}
+  .c-works,.lead{font-size:clamp(15px,4vw,18px)}
+  .layout-cover{padding-right:20px}
+  .aecodito{position:relative;right:auto;bottom:auto;width:140px;margin-top:8px;align-self:center}
+  .layout-concept{padding-top:0} .layout-concept .split{margin-top:16px}
+  .slide-foot{left:20px;right:20px;bottom:9px;font-size:10px}
+  .ladder{height:auto;flex-direction:column}
+  .ld-step{height:auto!important;min-height:0;border-bottom:none;border-left:3px solid var(--accent3);border-radius:0 14px 14px 0;transform:none;opacity:1}
+  .fund{height:160px;max-width:100%} .th{grid-template-columns:1fr!important}
+  .th::before,.th::after{display:none}
+  .th-item{flex-direction:row;align-items:center;gap:11px;padding:7px 0}
+  .ring-cycle{width:290px;height:270px} .concept-web{height:290px}
+  .toc-grid{grid-template-columns:repeat(2,1fr)} .toc{padding:38px 18px}
+  .counter{display:none} .ctrl{bottom:12px;right:12px}
+}
 /* chrome */
 .chrome{position:fixed;inset:0;z-index:50;pointer-events:none}
 .progress{position:absolute;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--violet),var(--green));width:0;transition:width .45s var(--ease)}
@@ -785,13 +1174,15 @@ let mode=localStorage.getItem('aecode-s100-mode')||'mix';
 const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
 function applyTheme(){slides.forEach(s=>{const b=s.dataset.base,e=mode==='mix'?b:mode;
   s.classList.toggle('is-dark',e==='dark');s.classList.toggle('is-light',e==='light');});}
-function fit(){stage.style.transform='scale('+Math.min(innerWidth/1280,innerHeight/720)+')';}
+const mob=()=>matchMedia('(max-width:860px)').matches;
+function fit(){if(mob()){stage.style.transform='none';return;}
+  stage.style.transform='scale('+Math.min(innerWidth/1280,innerHeight/720)+')';}
 function go(n){n=Math.max(0,Math.min(total-1,n));slides[cur].classList.remove('active');cur=n;
   const s=slides[cur];s.classList.add('active');
   [...s.querySelectorAll('.reveal')].forEach((el,i)=>el.style.transitionDelay=(reduced?0:Math.min(i*45,560))+'ms');
   progress.style.width=((cur+1)/total*100)+'%';
   counter.textContent=String(cur+1).padStart(3,'0')+' / '+String(total).padStart(3,'0');
-  location.hash=cur+1;}
+  if(mob())scrollTo(0,0);location.hash=cur+1;}
 function next(){go(cur+1)}function prev(){go(cur-1)}
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();
   if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();next()}
