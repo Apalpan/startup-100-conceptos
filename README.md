@@ -8,6 +8,8 @@ organizadas en **10 niveles** (de lo más básico a nivel experto). Cada concept
 2. **Analogía** — una imagen cotidiana para fijar la idea y poder explicarla a cualquiera.
 3. **Ejemplo real** — cómo lo usa una startup gigante (Airbnb, Uber, Stripe, Slack, Notion…) o **AECODE**.
 
+Además, **cada uno de los 100 conceptos** trae una banda de *insight* especial que lo profundiza: un **Dato** (estadística con fuente), una **Clave** (heurística para aplicarlo), una **Anécdota** (historia real), una **Cita** (frase de un grande) o una **Trampa** (error común a evitar) — con su propio ícono y color.
+
 Presentación autocontenida: un solo `index.html`, sin build ni dependencias. **127 slides**,
 **responsive** (en móvil hace reflow a lectura vertical), con **diagramas animados** que explican
 cada bloque y muestran **cómo se conectan** los conceptos.

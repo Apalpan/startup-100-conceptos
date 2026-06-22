@@ -158,16 +158,33 @@ SLIDES=[]
 def S(theme, chapter, layout, content):
     SLIDES.append(dict(theme=theme, chapter=chapter, layout=layout, content=content))
 
-def concept(num, level_name, name, eng, works, analogy, example, ex_tag, formula=None, theme="dark"):
+_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">'
+ICONS={
+ "dato":   _SVG+'<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>',
+ "clave":  _SVG+'<path d="M9.5 18h5"/><path d="M10.5 21h3"/><path d="M12 3a6 6 0 0 0-3.7 10.7c.7.6 1.2 1.4 1.2 2.3h5c0-.9.5-1.7 1.2-2.3A6 6 0 0 0 12 3z"/></svg>',
+ "anecdota":_SVG+'<path d="M21 11.5a8 8 0 0 1-11.6 7.1L3 21l2.4-6.4A8 8 0 1 1 21 11.5z"/></svg>',
+ "cita":   _SVG+'<path d="M21 11.5a8 8 0 0 1-11.6 7.1L3 21l2.4-6.4A8 8 0 1 1 21 11.5z"/></svg>',
+ "trampa": _SVG+'<path d="M12 3l9.5 17H2.5z"/><path d="M12 10v4.5"/><path d="M12 17.5h.01"/></svg>',
+}
+_KLAB={"dato":"Dato","clave":"Clave","anecdota":"Anécdota","cita":"En una frase","trampa":"Trampa"}
+
+def concept(num, level_name, name, eng, works, analogy, example, ex_tag, formula=None, extra=None, theme="dark"):
     eng_h = f'<span class="c-eng">{esc(eng)}</span>' if eng else ''
     form_h = (f'<div class="c-formula reveal"><span>Cómo se calcula</span><code>{formula}</code></div>'
               if formula else '')
+    extra_h = ''
+    if extra:
+        k, txt = extra
+        extra_h = (f'<div class="c-extra kind-{k} reveal"><div class="cx-ic">{ICONS.get(k,ICONS["clave"])}</div>'
+                   f'<div class="cx-body"><span class="cx-lab">{_KLAB.get(k,"Clave")}</span>'
+                   f'<div class="cx-txt">{txt}</div></div></div>')
     content = f"""
   {kicker(level_name)}
   <div class="c-head reveal"><span class="c-num">{num:03d}</span>
     <h2 class="c-name">{name}{eng_h}</h2></div>
   <div class="c-works reveal">{works}</div>
   {form_h}
+  {extra_h}
   <div class="split">
     <div class="split-l">{card("Analogía", analogy, tag="Piénsalo así", tone="blue")}</div>
     <div class="split-r">{card("Ejemplo real", example, tag=ex_tag, tone="green")}</div>
@@ -793,6 +810,110 @@ def level_synth(L):
   </div>"""
     S(L["theme"], L["name"], "synth", content)
 
+# ---- enriquecimiento por concepto (dato / clave / anécdota / cita / trampa) ----
+EXTRAS = {
+ 1:("clave","Paul Graham lo reduce a una palabra: <b>crecimiento</b>. Si no está diseñada para crecer rápido, es un negocio — no una startup. La meta de YC: <span class='cx-fig'>5–7%</span> de crecimiento <i>semanal</i>."),
+ 2:("dato","La causa #1 de muerte de startups (CB Insights): <span class='cx-fig'>42%</span> fracasan por construir algo que <b>nadie necesita</b>. El problema mal elegido se paga con todo el proyecto."),
+ 3:("clave","Plantilla que funciona: <i>«Para [cliente] que [necesidad], somos [categoría] que [beneficio], a diferencia de [alternativa]».</i> Si no cabe en una frase, todavía no la tienes."),
+ 4:("clave","Las ideas valen poco; lo escaso es la <b>ejecución</b>. Por eso los inversionistas casi nunca firman NDAs: tu ventaja no es la idea, es construirla mejor y más rápido que nadie."),
+ 5:("clave","La pregunta del inversor es «¿por qué tú?». La mejor respuesta no es pasión genérica, sino <b>ventaja injusta</b>: años dentro del problema, una red única o un insight que otros no ven."),
+ 6:("cita","<b>Amazon</b> mantuvo fija su visión («ser la empresa más centrada en el cliente») y cambió mil veces el cómo. Bezos: <i>«sé terco en la visión y flexible en los detalles».</i>"),
+ 7:("clave","Eric Ries: la unidad de progreso de una startup es el <b>aprendizaje validado</b>, no las funciones entregadas. Pregúntate siempre cuál es el experimento más barato que te enseña algo."),
+ 8:("clave","Escribe el supuesto como apuesta falsable: <i>«Creemos que [segmento] hará [acción] porque [razón]; lo sabremos si [métrica] supera [umbral]».</i> Si no puede fallar, no es un experimento."),
+ 9:("cita","Reid Hoffman (LinkedIn): <i>«Si no te avergüenza la primera versión de tu producto, lanzaste demasiado tarde».</i> El MVP incomoda — por eso enseña tan rápido."),
+ 10:("clave","Regla del «Mom Test»: no preguntes «¿usarías esto?» (todos mienten por cortesía). Pregunta por el <b>pasado</b>: «¿cómo lo resolviste la última vez y cuánto te costó?»."),
+ 11:("dato","En B2B el comité de compra promedio tiene <span class='cx-fig'>6–10</span> personas (Gartner). El usuario que ama tu producto casi nunca es quien firma el cheque: hay que convencer a ambos."),
+ 12:("clave","El ICP no es demografía, es <b>cualificación</b>: tamaño, dolor, presupuesto y urgencia. Un buen ICP también define a quién <i>rechazas</i> — decir que no es lo que enfoca al equipo."),
+ 13:("trampa","Inventar personas de ficción sin hablar con nadie. Una buena buyer persona nace de <span class='cx-fig'>10+</span> entrevistas reales, no de una lluvia de ideas en una sala cerrada."),
+ 14:("clave","La pregunta JTBD de oro: <i>«¿qué estaba haciendo el cliente justo antes de buscarte, y qué quería lograr después?».</i> Ahí aparece tu verdadero competidor (que rara vez es obvio)."),
+ 15:("clave","Mejor un segmento pequeño que te <b>ame</b> que un mercado enorme que te tolere. Geoffrey Moore: domina un nicho y úsalo de «pista de bolos» para tumbar los siguientes."),
+ 16:("trampa","Trampa de pitch: «el mercado es de $X billones, con solo 1% somos ricos». Los inversionistas lo detestan. Construye el TAM <b>bottom-up</b> (clientes × precio), no top-down."),
+ 17:("anecdota","<b>Amazon</b> empezó vendiendo solo <b>libros</b>: el producto perfecto para internet (catálogo infinito, fácil de enviar). Desde esa cabeza de playa conquistó «todo lo demás»."),
+ 18:("dato","Entre los early adopters y la mayoría hay un <b>abismo</b> (Geoffrey Moore). Muchas startups mueren ahí: lo que enamoró a los pioneros no convence a los pragmáticos del mercado masivo."),
+ 19:("dato","Bill Gross (Idealab) analizó <span class='cx-fig'>200</span> startups: el <b>timing</b> explicó el <span class='cx-fig'>42%</span> de la diferencia entre éxito y fracaso — más que la idea, el equipo o el capital."),
+ 20:("cita","Steve Blank: <i>«No hay hechos dentro de tu oficina, así que sal del edificio».</i> Ningún plan de negocio sobrevive intacto al primer contacto con clientes reales."),
+ 21:("dato","Marc Andreessen: <i>«lo único que importa es llegar a PMF».</i> Señal medible (Sean Ellis): que <span class='cx-fig'>40%+</span> de tus usuarios diga que estaría «muy decepcionado» sin tu producto."),
+ 22:("clave","Hay encaje real cuando tus <b>aliviadores</b> atacan dolores que el cliente <i>ya</i> intenta resolver. Aliviar un dolor que nadie siente es ingeniería bonita, no valor."),
+ 23:("anecdota","<b>Instagram</b> era Burbn, una app de check-ins con 10 funciones. Vieron que la gente solo usaba las <b>fotos</b>, borraron el resto y relanzaron: <span class='cx-fig'>25k</span> usuarios el primer día."),
+ 24:("anecdota","<b>YouTube</b> nació como sitio de citas en video; nadie subía perfiles, pero sí otros videos. <b>Groupon</b> era una web de activismo. El pivote a tiempo salvó a ambos."),
+ 25:("clave","Un roadmap no es una lista de funciones con fechas: es una <b>secuencia de problemas a resolver</b>. Comunica el «por qué» y el «cuándo aprox», nunca promesas que rompen la confianza."),
+ 26:("dato","Hasta <span class='cx-fig'>40–60%</span> de quienes se registran en un software lo usan <b>una vez</b> y no vuelven. El onboarding —no la adquisición— es donde más negocio se pierde."),
+ 27:("anecdota","Momentos «aha» legendarios: <b>Facebook</b> = 7 amigos en 10 días · <b>Twitter</b> = seguir a 30 cuentas · <b>Slack</b> = 2.000 mensajes de un equipo. Todo el onboarding empuja hacia ahí."),
+ 28:("clave","Acorta el TTV borrando pasos antes del primer valor: pide los datos <i>después</i> de demostrar utilidad. Cada campo de registro extra te cuesta usuarios reales."),
+ 29:("anecdota","<b>PayPal</b> entró por un wedge minúsculo: pagos entre usuarios de <b>eBay</b>. <b>Uber</b> entró por autos negros de lujo antes de masificarse. Pequeño, agudo e indispensable."),
+ 30:("clave","Señal de que productizaste: tu ingreso deja de crecer en línea recta con tus horas. Si para facturar el doble necesitas el doble de gente, todavía vendes servicio."),
+ 31:("clave","El bloque que más se ignora y más mata: <b>Estructura de costos vs. Ingresos</b>. Un modelo precioso que no cuadra ahí no es un negocio: es un hobby caro."),
+ 32:("clave","Ash Maurya cambió 4 bloques del canvas clásico por <b>Problema, Solución, Métricas clave y Ventaja injusta</b>: justo lo que puede matar o salvar a una startup temprana."),
+ 33:("clave","Regla práctica: una línea de ingreso debería poder crecer <span class='cx-fig'>10x</span> antes de abrir otra. Demasiados streams temprano dispersan al equipo y confunden al cliente."),
+ 34:("dato","El precio es la palanca de beneficio más potente y la menos trabajada: subirlo <span class='cx-fig'>1%</span> mejora el beneficio operativo ~<span class='cx-fig'>11%</span> en promedio (McKinsey). Casi nadie testea precios."),
+ 35:("trampa","Trampa del freemium: regalar tanto que nadie paga. Lo gratis debe dar valor real pero <b>limitado</b> por algo que crezca con el éxito del usuario (espacio, asientos, uso)."),
+ 36:("anecdota","<b>Adobe</b> pasó de vender cajas de Photoshop a suscripción (Creative Cloud) en 2013. La acción cayó al inicio… y luego se multiplicó por ~<span class='cx-fig'>10x</span>. El ingreso recurrente ganó."),
+ 37:("clave","El «problema del huevo y la gallina»: arranca por el lado más difícil (la oferta) y a mano. Los fundadores de <b>Airbnb</b> fotografiaban los departamentos uno por uno."),
+ 38:("dato","Ciclos de venta típicos: B2C minutos · B2B pyme semanas · enterprise <span class='cx-fig'>6–18</span> meses. El modelo define tu caja: B2C cobra ya; enterprise tarda, pero el ticket es enorme."),
+ 39:("dato","Take rates de referencia: <b>Uber</b> ~25% · <b>Airbnb</b> ~14% · <b>App Store</b> 15–30% · <b>Amazon</b> 3P ~15%+. Demasiado alto invita a que la oferta te esquive y transe por fuera."),
+ 40:("anecdota","<b>WhatsApp</b> llegó a 450M usuarios cobrando $1/año (casi nada) y se vendió por <span class='cx-fig'>$19.000M</span> sin ads. La monetización no siempre es hoy — pero el plan debe existir."),
+ 41:("cita","Bill Gurley: <i>«si la unidad no funciona, el volumen no la arregla».</i> Crecer con unit economics negativos es acelerar hacia el precipicio con más combustible."),
+ 42:("dato","Benchmark EdTech: el CAC suele ser $100–300. <b>AECODE</b> logra ~<span class='cx-fig'>US$35</span> apoyándose en comunidad orgánica: el canal barato es su ventaja estructural, no un lujo."),
+ 43:("dato","Subir la <b>retención</b> un 5% puede subir el beneficio entre <span class='cx-fig'>25%</span> y <span class='cx-fig'>95%</span> (Bain). El LTV se gana reteniendo, no vendiendo más fuerte una sola vez."),
+ 44:("dato","Regla del pulgar (David Skok): <b>3:1</b> es sano; <b>1:1</b> pierdes dinero; <b>5:1</b> probablemente inviertes de menos en crecimiento y le dejas mercado a la competencia."),
+ 45:("dato","Benchmark SaaS: recuperar el CAC en <span class='cx-fig'>&lt;12</span> meses es bueno; <span class='cx-fig'>&lt;6</span> es excelente y casi se autofinancia. <b>AECODE</b> ronda los <span class='cx-fig'>7</span> meses."),
+ 46:("dato","Por qué los inversionistas aman el software: márgenes brutos de <span class='cx-fig'>70–90%</span> vs. 20–40% de un servicio. El margen decide cuánto puedes reinvertir en crecer."),
+ 47:("clave","Mide el margen de contribución por pedido <b>incluyendo</b> envío, soporte, devoluciones y descuentos. Muchas startups de delivery «crecieron» perdiendo dinero en cada orden."),
+ 48:("dato","Métrica de moda (David Sacks): <b>Burn Multiple</b> = caja quemada ÷ ARR nuevo. <span class='cx-fig'>&lt;1</span> es excelente; <span class='cx-fig'>&gt;2</span> es alarma: quemas mucho por cada dólar de ingreso."),
+ 49:("clave","Regla VC: levanta para <span class='cx-fig'>18–24</span> meses de runway. El runway no es solo dinero — es <b>libertad para equivocarte</b> y corregir antes de que se acabe el reloj."),
+ 50:("cita","Paul Graham distingue <b>«default alive» vs «default dead»</b>: ¿llegas a rentabilidad con tu caja actual antes de quedarte sin dinero? Saber la respuesta cambia cada decisión."),
+ 51:("clave","Test rápido: ¿la métrica te dice <b>qué hacer distinto mañana</b>? «1M de visitas» no; «3% activa y de esos 60% retiene» sí. Si no cambia una decisión, es vanidad."),
+ 52:("anecdota","North Stars famosas: <b>Airbnb</b> = noches reservadas · <b>Spotify</b> = tiempo de escucha · <b>WhatsApp</b> = mensajes enviados. Una sola métrica que captura valor entregado, no ingreso."),
+ 53:("clave","Dave McClure las llamó «pirate metrics» (AARRR suena a pirata). Úsalas como <b>diagnóstico</b>: arregla la etapa más rota antes de gastar más en la boca del embudo."),
+ 54:("dato","Subir la activación suele ser <span class='cx-fig'>2–3x</span> más barato que subir la adquisición para el mismo crecimiento neto: ya pagaste por traer al usuario, solo falta llevarlo al valor."),
+ 55:("cita","Brian Balfour: <i>«la retención es el motor de todo crecimiento».</i> Sin ella el growth es un balde roto: cada dólar de marketing se fuga por el fondo."),
+ 56:("dato","Matemática brutal: con <span class='cx-fig'>5%</span> de churn mensual pierdes ~46% de tus clientes al año. Bajar el churn del 5% al 2% casi <b>duplica</b> el LTV sin vender uno más."),
+ 57:("clave","La curva de retención por cohorte debe <b>aplanarse</b> (un grupo fiel que se queda), no caer a cero. Curva que aplana = PMF; curva que toca el suelo = producto sin hábito."),
+ 58:("clave","No mezcles ingreso <b>recurrente</b> con one-time: un proyecto puntual infla el ARR y engaña la valoración. Los inversionistas descuentan fuerte lo que no se repite solo."),
+ 59:("dato","Los mejores SaaS tienen NRR <span class='cx-fig'>&gt;120%</span> (<b>Snowflake</b> ~158%): aunque no consigan un cliente nuevo, <b>crecen</b> solo con los actuales. Es el santo grial del modelo."),
+ 60:("dato","<b>T2D3</b> (Neeraj Agrawal, Battery): desde ~$2M ARR — triplica, triplica, duplica, duplica, duplica → ~<span class='cx-fig'>$100M</span> en 5 años. La ruta de Marketo, Zendesk y otros."),
+ 61:("anecdota","<b>Dropbox</b> regalaba <span class='cx-fig'>500MB</span> por cada amigo invitado: los referidos subieron ~<span class='cx-fig'>60%</span> los registros. Convirtió a sus usuarios en su fuerza de ventas."),
+ 62:("clave","Optimiza el embudo de <b>abajo hacia arriba</b>: tapar una fuga cerca de la conversión rinde más que empujar más leads por la boca del embudo. Multiplicas sobre una base mayor."),
+ 63:("dato","Si <b>K&gt;1</b>, cada usuario trae a más de uno y creces exponencialmente sin pagar. <b>Hotmail</b> añadió «PS: consigue tu correo gratis» y pasó de 0 a <span class='cx-fig'>12M</span> en 18 meses."),
+ 64:("dato","<b>Ley de Metcalfe</b>: el valor de una red crece con el <b>cuadrado</b> de sus usuarios (n²). Por eso el 2º jugador rara vez alcanza al 1º una vez que la red se llena."),
+ 65:("anecdota","<b>Figma</b> creció dejando que un diseñador compartiera un simple link; el producto se vendía solo dentro del equipo. El usuario, no el vendedor, fue el canal de distribución."),
+ 66:("clave","No existe «el» GTM: PLG, ventas, comunidad o canal. Regla de oro: el <b>costo de adquirir</b> debe encajar con el <b>precio</b>. No vendes algo de $20/mes con vendedores de terreno."),
+ 67:("anecdota","<b>Dollar Shave Club</b> gastó ~$4.500 en un video absurdo: <span class='cx-fig'>12M</span> de vistas, servidor caído y venta a Unilever por <span class='cx-fig'>$1.000M</span>. El contenido le ganó al presupuesto."),
+ 68:("trampa","Trampa: un pipeline lleno de «quizás». Cualifica con marcos como <b>BANT</b> (presupuesto, autoridad, necesidad, tiempo). Un deal mal cualificado consume meses y nunca cierra."),
+ 69:("dato","NPS = % promotores − % detractores. <span class='cx-fig'>0</span> es neutro, <span class='cx-fig'>50+</span> excelente, <span class='cx-fig'>70+</span> clase mundial (Apple, Tesla). <b>AECODE</b>: 66–78 en cohortes."),
+ 70:("clave","El referido convierte <span class='cx-fig'>3–5x</span> mejor que un lead frío y retiene más. Pero la gente solo recomienda lo que ama: el referral <b>amplifica</b> el PMF, no lo reemplaza."),
+ 71:("cita","Warren Buffett invierte en <i>«castillos económicos protegidos por fosos infranqueables».</i> Sin foso, cualquier margen atractivo atrae competidores que lo erosionan a cero."),
+ 72:("clave","Hamilton Helmer («7 Powers») lista los fosos reales: <b>escala, red, costos de cambio, marca, recursos, contraposición y procesos</b>. «Tecnología superior» rara vez es foso: se copia."),
+ 73:("anecdota","<b>Jeff Bezos</b> dibujó el flywheel de Amazon en una servilleta: precios bajos → más clientes → más vendedores → más selección → precios aún más bajos. Una vez girando, no para."),
+ 74:("clave","Los mejores costos de cambio no encierran con contratos, sino con <b>valor acumulado</b>: los datos, el historial y las integraciones del cliente. Irse significa perder todo eso."),
+ 75:("dato","El grande produce más barato y puede bajar precio sin morir. Por eso en mercados «winner-take-most» llegar primero a escala importa más que el margen del primer día."),
+ 76:("anecdota","<b>Apple</b> abrió la App Store en 2008; hoy mueve cientos de miles de millones que Apple no construyó. Cuando miles crean valor sobre ti, reemplazarte se vuelve imposible."),
+ 77:("anecdota","<b>Nintendo Wii</b> abandonó la guerra de potencia gráfica (océano rojo) y creó el juego por movimiento para no-gamers: vendió <span class='cx-fig'>100M+</span> consolas en un mercado nuevo."),
+ 78:("clave","Bola de nieve: más uso → más datos → mejor producto → más uso. Con IA, los datos propios componen una ventaja que el dinero del rival no compra de la noche a la mañana."),
+ 79:("dato","Mito: el primero siempre gana. Estudio clásico (Golder & Tellis): ~<span class='cx-fig'>47%</span> de los pioneros fracasaron. <b>Google</b> y <b>Facebook</b> fueron fast followers que ejecutaron mejor."),
+ 80:("anecdota","<b>Netflix</b> (DVD por correo) parecía un juguete; Blockbuster la rechazó comprar por $50M en 2000. La disrupción entra por abajo, se ve inferior… y casi nunca se ve venir."),
+ 81:("anecdota","<b>Mailchimp</b> creció <span class='cx-fig'>21</span> años sin un dólar de VC y se vendió por <span class='cx-fig'>$12.000M</span> en 2021; los fundadores se quedaron casi todo. Levantar capital no es obligatorio."),
+ 82:("clave","Levantar capital no es un logro, es <b>combustible y dilución</b>. La pregunta correcta no es «¿cuánto puedo levantar?» sino «¿qué hito específico compro con este dinero?»."),
+ 83:("dato","Rangos orientativos: pre-seed <span class='cx-fig'>&lt;$1M</span> · seed $1–4M · Serie A $8–20M · B $20–50M · C+ más. Cada ronda exige haber probado el hito de la anterior."),
+ 84:("dato","El VC vive de <b>outliers</b>: ~75% de sus inversiones no devuelven capital, así que cada apuesta debe <i>poder</i> ser 100x. Por eso preguntan «¿esto puede ser gigante?», no «¿es rentable ya?»."),
+ 85:("trampa","Cuidado con valoración alta sin tracción: la fija la oferta/demanda de la ronda, no un Excel. Si la siguiente ronda vale menos, sufres un doloroso <b>«down round»</b> que diluye y asusta."),
+ 86:("trampa","Trampa fatal: regalar 20–30% a un cofundador que se va, o a advisors, antes de empezar. Un cap table «sucio» espanta a los VC y te persigue durante rondas enteras."),
+ 87:("dato","Tras varias rondas, un fundador suele quedar con <span class='cx-fig'>10–20%</span>. Page y Brin tenían ~16% c/u en el IPO de Google — de una empresa de cientos de miles de millones. Diluir bien es ganar."),
+ 88:("anecdota","El <b>SAFE</b> lo creó Y Combinator en 2013 para cerrar pre-seed en <b>días</b>, no en meses de abogados: el dinero entra ahora y se convierte en acciones en la próxima ronda."),
+ 89:("dato","Estándar de mercado: vesting a <span class='cx-fig'>4</span> años con <span class='cx-fig'>1</span> de «cliff» — si te vas antes del primer año, no te llevas nada. Protege a la empresa de socios que abandonan temprano."),
+ 90:("clave","Tu pitch entusiasma; el due diligence <b>verifica</b>. Si tus cifras de pitch no cuadran con la contabilidad, el CRM y los analytics, el trato muere. Concilia <i>antes</i> de abrir el data room."),
+ 91:("anecdota","<b>WhatsApp</b> servía a <span class='cx-fig'>450M</span> usuarios con ~<span class='cx-fig'>55</span> empleados (1 ingeniero por cada ~14M). Eso es escalabilidad: ingreso que sube sin que los costos lo persigan."),
+ 92:("cita","Reid Hoffman: blitzscaling es <i>«priorizar velocidad sobre eficiencia ante la incertidumbre».</i> Solo vale en mercados «winner-take-all»: si frenar es perderlo todo, quemar por escala es racional."),
+ 93:("dato","Definición OCDE de scale-up: <span class='cx-fig'>+20%</span> anual en ingresos o empleo por 3 años. El reto cambia de «encontrar PMF» a «no romper la cultura ni los sistemas al crecer»."),
+ 94:("anecdota","<b>Aileen Lee</b> acuñó «unicornio» en 2013: entonces había solo <span class='cx-fig'>39</span> en EE.UU. y eran rarísimos. Hoy hay más de mil — y existen «decacornios» (>$10.000M)."),
+ 95:("cita","Cultura de Google: es más fácil mejorar <span class='cx-fig'>10x</span> que <span class='cx-fig'>10%</span>, porque el 10x te obliga a <b>reinventar</b> en vez de optimizar lo que ya existe. Apuntas a la Luna, no a una escalera más alta."),
+ 96:("clave","El interés compuesto es la 8ª maravilla: ventajas pequeñas (datos, marca, red) que se refuerzan se vuelven <b>imbatibles</b> con el tiempo. La paciencia es parte de la estrategia, no su ausencia."),
+ 97:("anecdota","<b>Facebook</b> compró Instagram por $1.000M (2012, con 13 empleados) y WhatsApp por <span class='cx-fig'>$19.000M</span>. A veces comprar es más barato que competir — y neutraliza la amenaza."),
+ 98:("clave","La mayoría de exits son <b>adquisiciones</b>, no IPOs. Construye una empresa que valga la pena comprar (producto, equipo, datos, mercado) y el exit llega como consecuencia, no como meta."),
+ 99:("anecdota","El IPO de <b>Airbnb</b> (dic 2020, en plena pandemia) la valoró en ~<span class='cx-fig'>$47.000M</span> el primer día. Salir a bolsa da capital y liquidez, a cambio de transparencia y escrutinio trimestral."),
+ 100:("dato","«Category King» (Play Bigger): quien <b>define</b> una categoría captura ~<span class='cx-fig'>76%</span> de su valor de mercado. No compitas en una casilla — crea el tablero. <b>AECODE</b> apunta a la «capa de capacidad verificable» del sector AEC."),
+}
+
 # ---- emitir intro + conceptos + síntesis por nivel ----
 num = 0
 for L in LEVELS:
@@ -802,7 +923,7 @@ for L in LEVELS:
         name, eng, works, analogy, example, ex_tag = c[0], c[1], c[2], c[3], c[4], c[5]
         formula = c[6] if len(c) > 6 else None
         concept(num, L["name"], name, eng, works, analogy, example, ex_tag,
-                formula=formula, theme=L["theme"])
+                formula=formula, extra=EXTRAS.get(num), theme=L["theme"])
     level_synth(L)
 
 # ======================= RUTA DE DOMINIO =======================
@@ -956,7 +1077,7 @@ body{background:#05060f;color:#fff;overflow:hidden;font-family:Manrope,"Plus Jak
 .card-green .card-big{color:var(--accent3)} .card-blue .card-big{color:var(--accent2)}
 .cards-sm .card-head{font-size:16.5px} .cards-sm .card-body{font-size:13.5px}
 /* concept layout */
-.layout-concept{justify-content:flex-start;padding-top:54px;gap:13px}
+.layout-concept{justify-content:center;padding-top:0;gap:13px}
 .c-head{display:flex;align-items:baseline;gap:16px}
 .c-num{font-weight:800;font-size:clamp(28px,3.4vw,44px);line-height:1;color:transparent;
   -webkit-text-stroke:1.6px var(--accent);font-variant-numeric:tabular-nums;flex:none;opacity:.6}
@@ -968,7 +1089,20 @@ body{background:#05060f;color:#fff;overflow:hidden;font-family:Manrope,"Plus Jak
   background:var(--bg2);border:1px solid var(--card-line)}
 .c-formula span{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent3);flex:none}
 .c-formula code{font-family:ui-monospace,monospace;font-size:13.5px;color:var(--accent2);font-weight:600}
-.layout-concept .split{margin-top:auto}
+/* insight band (dato/clave/anécdota/cita/trampa) */
+.c-extra{display:flex;gap:15px;align-items:center;padding:14px 18px;border-radius:15px;background:var(--card);
+  border:1px solid var(--card-line);position:relative;overflow:hidden}
+.c-extra::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cx)}
+.cx-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:none;
+  background:color-mix(in srgb,var(--cx) 15%,transparent);color:var(--cx)}
+.cx-ic svg{width:23px;height:23px}
+.cx-lab{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--cx);display:block;margin-bottom:3px}
+.cx-txt{font-size:14.5px;line-height:1.46;color:var(--muted)}
+.cx-txt b{color:var(--fg);font-weight:700} .cx-txt i{font-style:italic;color:var(--cx)}
+.cx-fig{font-weight:800;color:var(--cx);font-size:1.04em;font-variant-numeric:tabular-nums}
+.kind-dato{--cx:var(--accent2)} .kind-clave{--cx:var(--accent3)} .kind-anecdota{--cx:var(--accent)}
+.kind-cita{--cx:var(--accent)} .kind-trampa{--cx:#E0A23B}
+.layout-concept .split{margin-top:4px}
 .layout-concept .card-body{font-size:14px;line-height:1.42}
 .layout-concept .card-head{font-size:15px;color:var(--accent3)} .card-blue .card-head{color:var(--accent2)}
 /* bullets */
