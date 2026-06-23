@@ -284,7 +284,7 @@ LEVELS = [
     ("Startup","la empresa diseñada para crecer",
      "Una organización temporal que <b>busca un modelo de negocio repetible y escalable</b> bajo incertidumbre extrema. No es una empresa pequeña: es una máquina diseñada para <i>crecer rápido</i>.",
      "Es un cohete, no un auto. Un auto te lleva del punto A al B; el cohete se construye para <b>despegar y multiplicarse</b>, aunque pueda explotar.",
-     "<b>AECODE</b> no es una academia más: es una startup que busca un modelo escalable para convertir conocimiento técnico AEC en capacidad verificable, con presencia en <b>14 países</b>.","AECODE"),
+     "<b>AECODE</b> no es una academia más: es una startup que busca un modelo escalable para <b>acelerar la adopción tecnológica</b> en construcción (BIM, automatización, IA), con comunidad en <b>14 países</b>.","AECODE"),
     ("El Problema","pain point",
      "El dolor real y frecuente del cliente que justifica que exista tu startup. Si nadie sufre el problema, <b>no hay negocio</b>: la regla es 'enamórate del problema, no de tu solución'.",
      "Eres médico antes que vendedor: primero <b>diagnosticas el dolor</b>; recetar sin diagnóstico es vender vitaminas a quien necesita una cirugía.",
@@ -292,7 +292,7 @@ LEVELS = [
     ("Propuesta de Valor","value proposition",
      "La promesa concreta de <b>por qué un cliente te elige a ti</b>: qué problema resuelves, para quién y qué te hace distinto. Se resume en una frase clara.",
      "Es el titular de una noticia: si en <b>una línea</b> no entiendo qué gano, paso de página.",
-     "<b>AECODE:</b> «convierte conocimiento técnico AEC en <b>capacidad real demostrada con evidencia</b>». Aprende · Aplica · Demuestra.","AECODE"),
+     "<b>AECODE:</b> «convierte el aprendizaje en <b>adopción tecnológica y mejora de productividad</b>». Aprende · Aplica · Construye mejor.","AECODE"),
     ("Idea vs Oportunidad","idea ≠ opportunity",
      "Una idea es una ocurrencia; una <b>oportunidad</b> es una idea con mercado, timing y forma de ganar dinero. Las ideas son baratas; <i>la ejecución sobre una oportunidad real es lo escaso</i>.",
      "Una idea es una semilla; la oportunidad es la semilla <b>más</b> tierra fértil, clima y estación correcta. Sin lo segundo, no germina.",
@@ -329,7 +329,7 @@ LEVELS = [
     ("Cliente vs Usuario","quién paga ≠ quién usa",
      "El <b>usuario</b> usa el producto; el <b>cliente</b> es quien paga. A veces coinciden, a veces no, y confundirlos hace que diseñes para uno y cobres al otro mal.",
      "En un colegio el alumno <b>usa</b> la clase, pero el padre la <b>paga</b>. Si solo enamoras al alumno y olvidas al padre, no renuevan.",
-     "<b>AECODE B2B2C:</b> el profesional <i>usa</i> y aprende; la empresa AEC <i>paga</i> por upskilling medible del equipo. Hay que satisfacer a ambos.","AECODE"),
+     "<b>AECODE B2C2B:</b> el profesional <i>usa</i> y aprende; la empresa AEC <i>paga</i> por la adopción y la productividad del equipo. Hay que satisfacer a ambos.","AECODE"),
     ("ICP","ideal customer profile",
      "El <b>perfil de cliente ideal</b>: el tipo de empresa o persona a la que tu producto le calza perfecto, paga bien y se queda. Enfocarte en él multiplica la eficiencia comercial.",
      "Es la talla exacta de zapato: vender a todos es vender tropezando; vender a tu talla es <b>caminar rápido y cómodo</b>.",
@@ -349,7 +349,7 @@ LEVELS = [
     ("TAM · SAM · SOM","tamaño del mercado",
      "Tres círculos concéntricos: <b>TAM</b> (todo el mercado), <b>SAM</b> (el que puedes servir con tu modelo) y <b>SOM</b> (el que realmente capturarás a corto plazo).",
      "TAM es todo el pastel; SAM, la porción que alcanza tu cuchillo; SOM, <b>el bocado</b> que de verdad te comerás este año.",
-     "<b>AECODE</b> internamente: TAM upskilling AEC LATAM ~US$2.5B, SAM hispano US$600–800M, SOM ~US$3–5M capturable a 3 años.","AECODE"),
+     "<b>AECODE</b>: TAM formación digital AEC LATAM ~US$360M, SAM servible US$87.5M, SOM 3 años US$2.5M (menos del <b>3%</b> — no necesita dominar el mercado).","AECODE"),
     ("Beachhead Market","mercado playa",
      "El <b>nicho inicial</b> donde concentras toda tu fuerza para ganar de forma dominante antes de expandirte. Cabeza de playa: tomas un punto pequeño y desde ahí avanzas.",
      "Como en el ajedrez o un desembarco: <b>aseguras una casilla</b> primero y la usas de trampolín, en vez de dispersarte por todo el tablero.",
@@ -390,7 +390,7 @@ LEVELS = [
     ("Roadmap","hoja de ruta",
      "El <b>plan priorizado</b> de qué construirás y por qué, conectando la visión con las entregas concretas. Comunica el rumbo sin prometer fechas imposibles.",
      "Es el mapa de una expedición: marca <b>los hitos</b> y la dirección, pero deja espacio para rodear los obstáculos del camino.",
-     "<b>AECODE</b> ordena su roadmap por capas: primero Live Training (caja), luego microlearning con evidencia, luego plataforma y B2B dashboard.","AECODE"),
+     "<b>AECODE</b> ordena su roadmap por etapas: 2024 comunidad + programas en vivo → 2025 primer piloto B2B (×4) → 2026 microlearning + IA aplicada → 2027 expansión regional.","AECODE"),
     ("Onboarding / Activación","primer valor",
      "El proceso que lleva al usuario nuevo a <b>experimentar el valor por primera vez</b> rápido. Una activación pobre mata más usuarios que un mal producto.",
      "Es el anfitrión que te recibe en la fiesta y te presenta a alguien: si te deja solo en la puerta, <b>te vas</b>.",
@@ -427,7 +427,7 @@ LEVELS = [
     ("Revenue Streams","fuentes de ingreso",
      "Las distintas <b>formas en que entra dinero</b>: venta directa, suscripción, comisión, publicidad, licencias. Diversificarlas con cabeza estabiliza el negocio.",
      "Son los afluentes de un río: <b>varias corrientes</b> alimentando el mismo caudal lo hacen más difícil de secar.",
-     "<b>AECODE</b> combina 4 motores: live training B2C, B2B institucional, on-demand+IA y B2B2C — un solo flywheel, varias entradas de caja.","AECODE"),
+     "<b>AECODE</b> combina motores: Live (ticket ~US$200), On-demand + IA y B2B institucional — modelo <b>B2C2B</b>, un solo flywheel con varias entradas de caja.","AECODE"),
     ("Pricing","estrategia de precio",
      "Cómo <b>fijas el precio</b>: por costo, por competencia o —el correcto— por <b>valor percibido</b>. El precio no es un número, es posicionamiento y filtro de cliente.",
      "El precio es la etiqueta de un vino: el mismo líquido sabe distinto a $10 que a $100. <b>Comunica</b> tanto como cobra.",
@@ -447,7 +447,7 @@ LEVELS = [
     ("B2B · B2C · B2B2C","a quién le vendes",
      "<b>B2C</b> vendes a personas, <b>B2B</b> a empresas, <b>B2B2C</b> una empresa paga/impulsa y el consumidor final usa. Cada uno cambia ciclo de venta, ticket y canal.",
      "B2C es la tienda al público; B2B, el mayorista; B2B2C, la marca que <b>pone sus productos en góndola</b> de otra tienda para llegar a ti.",
-     "<b>AECODE</b> es B2B2C: la empresa AEC paga el upskilling, el profesional aprende y la evidencia valida — comunidad barata + ticket alto.","AECODE"),
+     "<b>AECODE</b> es <b>B2C2B</b>: empieza por el profesional (comunidad + adopción) y, cuando aplica lo aprendido, la empresa lo escala a equipos — comunidad barata + ticket alto.","AECODE"),
     ("Take Rate","comisión",
      "El <b>porcentaje que se queda</b> el marketplace de cada transacción. Demasiado alto ahuyenta oferta; demasiado bajo no sostiene el negocio. Es un equilibrio delicado.",
      "Es la propina obligatoria del intermediario: un <b>pedacito de cada trato</b> que pasa por tu plataforma.",
@@ -464,11 +464,11 @@ LEVELS = [
     ("Unit Economics","economía por unidad",
      "Los ingresos y costos asociados a <b>una sola unidad</b> (un cliente, un pedido). Si la unidad no cierra, escalar solo multiplica las pérdidas.",
      "Es probar una galleta antes de hornear 10.000: si <b>una</b> sale mal o cuesta más de lo que vendes, la fábrica entera quiebra.",
-     "<b>AECODE</b> mide unit economics por motor: B2C (LTV:CAC ~4.5×), B2B (~30×) y on-demand (~12×) — cada cliente debe cerrar antes de pisar el acelerador.","AECODE"),
+     "<b>AECODE</b> mide unit economics por motor (Live, On-demand + IA, B2B): cada cliente debe cerrar —y el B2B es el más rentable y recurrente— antes de pisar el acelerador.","AECODE"),
     ("CAC","costo de adquisición",
      "Lo que <b>gastas en marketing y ventas</b> para conseguir un cliente nuevo. Es el precio de la gasolina del crecimiento: si sube sin control, te arruina.",
      "Es cuánto cuesta el anzuelo, la carnada y la gasolina del bote <b>por cada pez</b> que pescas.",
-     "<b>AECODE</b> logra un CAC blended de ~<b>US$35</b>, ~8× mejor que el benchmark EdTech, gracias a su comunidad orgánica de +95k.","AECODE",
+     "<b>AECODE</b> mantiene un CAC bajo (~<b>US$35</b> blended) apoyándose en su comunidad orgánica de <b>+95k</b> profesionales: el canal barato es su ventaja estructural.","AECODE",
      "CAC = gasto en ventas y marketing ÷ nº de clientes nuevos"),
     ("LTV","valor de vida del cliente",
      "El <b>ingreso total</b> que deja un cliente durante toda su relación contigo. Cuanto más retienes y más expandes, más vale cada cliente conseguido.",
@@ -478,17 +478,17 @@ LEVELS = [
     ("LTV : CAC","el ratio que importa",
      "La <b>relación</b> entre lo que vale un cliente y lo que cuesta conseguirlo. Regla de oro: <b>&gt;3×</b> es sano; &lt;1× significa que pierdes dinero con cada venta.",
      "Es invertir $1 y recibir $3: por debajo de eso, estás <b>vendiendo billetes de $10 a $12</b> y celebrando el volumen.",
-     "<b>AECODE</b> reporta LTV:CAC de <b>3.1×</b> (sobre el gate de inversión de 3×), con motores B2B que llegan a ~30×.","AECODE",
+     "<b>AECODE</b> cuida que cada motor (Live, On-demand, B2B) supere el umbral sano de <b>3×</b>, con el <b>B2B</b> como el más rentable por su recurrencia.","AECODE",
      "LTV : CAC — sano si es mayor a 3 : 1"),
     ("Payback Period","periodo de recuperación",
      "Los <b>meses que tardas en recuperar</b> el CAC con el margen del cliente. Cuanto más corto, menos capital necesitas para crecer.",
      "Es cuánto tarda un panel solar en pagarse con el ahorro de luz: hasta ese día, <b>solo recuperas</b> tu inversión.",
-     "<b>AECODE</b> recupera el CAC en ~<b>7 meses</b>, dentro del benchmark sano (&lt;12). Menos payback = crecimiento autofinanciado.","AECODE",
+     "<b>AECODE</b> recupera el CAC en <b>pocos meses</b> gracias a su comunidad (CAC bajo): menos payback = crecimiento más autofinanciado.","AECODE",
      "Payback = CAC ÷ margen bruto mensual por cliente"),
     ("Gross Margin","margen bruto",
      "El <b>% que queda</b> de cada venta tras restar el costo directo de entregarla. Define cuánto te sobra para marketing, equipo y utilidad. SaaS sano: 70–85%.",
      "De cada $100 de pizza vendida, lo que sobra <b>después</b> de harina, queso y horno — antes de pagar el local y el sueldo.",
-     "<b>AECODE</b> plataforma apunta a ~<b>74%</b> de gross margin, cercano a SaaS, muy por encima del servicio puro intensivo en horas.","AECODE"),
+     "<b>AECODE</b> mejora su margen ponderado de <b>35% → 47%</b> al cambiar el mix: menos B2C Live (intensivo en horas), más B2B y On-demand + IA.","AECODE"),
     ("Contribution Margin","margen de contribución",
      "Lo que <b>aporta cada venta</b> a cubrir los costos fijos, tras restar los costos variables. Cuando la suma supera los fijos, empiezas a ganar.",
      "Es cuánto pone <b>cada plato vendido</b> al bote común que paga el alquiler del restaurante: si pone poco, necesitas vender muchísimo.",
@@ -518,7 +518,7 @@ LEVELS = [
     ("North Star Metric","métrica estrella",
      "La <b>única métrica</b> que mejor captura el valor que entregas al cliente. Alinea a todo el equipo: si sube, el negocio sube de forma sana.",
      "Es la estrella polar de los marineros: <b>todos reman</b> hacia el mismo punto, sin discutir cada noche hacia dónde ir.",
-     "<b>AECODE:</b> «skills verificadas con evidencia / usuario activo». No se infla con marketing: o verificas la skill, o no.","AECODE"),
+     "<b>AECODE:</b> «progreso aplicado con evidencia / usuario activo». Mide <b>adopción real</b>, no consumo de contenido: o se aplica en obra, o no.","AECODE"),
     ("AARRR","pirate metrics",
      "El <b>embudo de 5 etapas</b> de Dave McClure: Adquisición, Activación, Retención, Revenue y Referido. Te dice <i>dónde</i> exactamente pierdes usuarios.",
      "Es un examen médico por sistemas: en vez de «me siento mal», ubicas <b>qué órgano</b> (etapa) falla y lo tratas.",
@@ -564,7 +564,7 @@ LEVELS = [
     ("Funnel · AIDA","embudo de conversión",
      "El recorrido del cliente por etapas —<b>Atención, Interés, Deseo, Acción</b>— donde en cada paso pierdes gente. Optimizar el embudo es ganar sin gastar más arriba.",
      "Es un embudo real: entra mucho líquido por arriba y <b>gotea</b> al final; ensanchar los cuellos hace caer más al vaso.",
-     "<b>AECODE</b> mide su funnel B2C con gates: lead→reto→1ª evidencia→skill verificada→premium, cada uno con su tasa de conversión.","AECODE"),
+     "<b>AECODE</b> mide su funnel con gates: comunidad→diagnóstico→1ª práctica aplicada→adopción con evidencia→premium/B2B, cada uno con su tasa de conversión.","AECODE"),
     ("Viral Loop · K-factor","viralidad",
      "Cuando <b>cada usuario trae a otros</b> usando el producto. El <b>K-factor</b> mide cuántos nuevos genera cada uno; si K&gt;1, el crecimiento se vuelve exponencial.",
      "Es un contagio: <b>cada 'infectado'</b> contagia a más de uno y la cosa se propaga sola, sin pagar por cada nuevo caso.",
@@ -580,7 +580,7 @@ LEVELS = [
     ("Go-To-Market","estrategia GTM",
      "El <b>plan de cómo llegas al mercado</b>: a qué segmento, por qué canal, con qué mensaje y modelo de venta. Define cómo conviertes producto en clientes.",
      "Es el plan de batalla antes de la invasión: <b>dónde desembarcas</b>, con qué tropas y por qué ruta, no improvisas en la playa.",
-     "<b>AECODE</b> GTM: comunidad orgánica (CAC bajo) como wedge B2C → casos de evidencia → entrada B2B con pilotos de 30 días y dashboard de ROI.","AECODE"),
+     "<b>AECODE</b> GTM (B2C2B): comunidad orgánica (CAC bajo) → diagnóstico y programas live → casos de adopción → entrada B2B con pilotos y ROI.","AECODE"),
     ("Inbound · Content","marketing de atracción",
      "<b>Atraer</b> clientes creando contenido útil que resuelve sus dudas, en vez de perseguirlos con anuncios. Construye audiencia, autoridad y un canal propio barato.",
      "Es ser el faro, no el cazador: <b>el barco viene a ti</b> porque emites luz útil, no porque lo persigas en la oscuridad.",
@@ -610,7 +610,7 @@ LEVELS = [
     ("Moat","foso defensivo",
      "La <b>barrera duradera</b> que protege tu negocio de la competencia (red, marca, costos de cambio, datos). Buffett invierte solo en empresas con foso ancho.",
      "Es el foso de agua alrededor del castillo: no impide que ataquen, pero hace que <b>conquistarte sea carísimo</b> y lento.",
-     "<b>AECODE</b> construye su moat con el Skill Graph AEC y la data de evidencia: cada vuelta del loop lo hace más difícil de replicar.","AECODE"),
+     "<b>AECODE</b> construye su foso con <b>comunidad AEC</b>, datos de adopción y rutas por rol: profundidad vertical en construcción que las plataformas horizontales no tienen.","AECODE"),
     ("Flywheel","volante de inercia",
      "Un <b>círculo virtuoso</b> donde cada parte impulsa a la siguiente y el sistema gana momentum: cuesta arrancar, pero luego gira casi solo.",
      "Es un volante pesado: las primeras vueltas cuestan muchísimo, pero una vez girando, <b>un empujón lo acelera</b> sin parar.",
@@ -655,7 +655,7 @@ LEVELS = [
     ("Fundraising","levantar capital",
      "El proceso de <b>conseguir inversión</b> a cambio de participación, para acelerar más rápido de lo que la caja permitiría. Es vender futuro para comprar velocidad.",
      "Es echar más leña a una fogata que ya prende: <b>no enciende</b> leña mojada (idea sin tracción), pero aviva una llama real.",
-     "<b>AECODE</b> avanza con ProInnóvate (Hito 1 aprobado) y prepara su data room conciliando tracción y unit economics antes de una ronda externa.","AECODE"),
+     "<b>AECODE</b> avanza con ProInnóvate (Hito 1 aprobado) y prepara su ronda (<b>ask ~US$125K</b> para escalar lo validado), conciliando tracción y unit economics.","AECODE"),
     ("Etapas de Ronda","pre-seed a Serie C",
      "El capital llega por <b>etapas</b>: pre-seed (idea), seed (PMF temprano), Serie A (escalar el modelo), B/C (expansión). Cada una con hitos y montos mayores.",
      "Son los <b>grados escolares</b> del financiamiento: no saltas a la universidad sin pasar primaria; cada nivel exige probar el anterior.",
@@ -733,7 +733,7 @@ LEVELS = [
     ("Category Creation","crear una categoría",
      "En vez de competir en un mercado existente, <b>defines uno nuevo</b> y te conviertes en su rey. El 'category king' suele capturar la mayor parte del valor.",
      "Es no ser 'otro refresco' sino <b>inventar la cola</b>: cuando creas la categoría, tu nombre se vuelve el del producto entero.",
-     "<b>Salesforce</b> creó el CRM en la nube; <b>AECODE</b> apunta a crear la categoría «capa de capacidad verificable» para el sector AEC.","AECODE"),
+     "<b>Salesforce</b> creó el CRM en la nube; <b>AECODE</b> apunta a su propia categoría: la plataforma que convierte aprendizaje en <b>adopción tecnológica y productividad</b> en AEC (AEC + e-Learning + IA).","AECODE"),
    ]),
 ]
 
@@ -769,7 +769,7 @@ SYNTH = {
                   ("Recursos","blue"),("Clientes","violet"),("Relación","blue"),
                   ("Canales","green"),("Costos","violet"),("Ingresos","green")]),
      'El modelo conecta <b>a quién sirves</b> con <b>cómo cobras</b>. Pricing, freemium, SaaS o marketplace son distintas formas de capturar el valor que creas.',
-     '<b>Se conecta con:</b> el modelo define tus ingresos, que alimentan los unit economics del Nivel 5. El B2B2C (38) es el modelo de AECODE.'),
+     '<b>Se conecta con:</b> el modelo define tus ingresos, que alimentan los unit economics del Nivel 5. El B2C2B (38) es el modelo de AECODE.'),
  5: ('La pregunta que decide todo: <span class="grad">¿gana cada cliente?</span>',
      scale_compare("US$35","≈US$110","3.1×"),
      'Si el <b>LTV</b> (lo que vale un cliente) supera al <b>CAC</b> (lo que cuesta) por <b>3× o más</b>, el negocio escala sano. Si no, crecer solo multiplica pérdidas.',
@@ -856,7 +856,7 @@ EXTRAS = {
  42:("dato","Benchmark EdTech: el CAC suele ser $100–300. <b>AECODE</b> logra ~<span class='cx-fig'>US$35</span> apoyándose en comunidad orgánica: el canal barato es su ventaja estructural, no un lujo."),
  43:("dato","Subir la <b>retención</b> un 5% puede subir el beneficio entre <span class='cx-fig'>25%</span> y <span class='cx-fig'>95%</span> (Bain). El LTV se gana reteniendo, no vendiendo más fuerte una sola vez."),
  44:("dato","Regla del pulgar (David Skok): <b>3:1</b> es sano; <b>1:1</b> pierdes dinero; <b>5:1</b> probablemente inviertes de menos en crecimiento y le dejas mercado a la competencia."),
- 45:("dato","Benchmark SaaS: recuperar el CAC en <span class='cx-fig'>&lt;12</span> meses es bueno; <span class='cx-fig'>&lt;6</span> es excelente y casi se autofinancia. <b>AECODE</b> ronda los <span class='cx-fig'>7</span> meses."),
+ 45:("dato","Benchmark SaaS: recuperar el CAC en <span class='cx-fig'>&lt;12</span> meses es bueno; <span class='cx-fig'>&lt;6</span> es excelente y casi se autofinancia. <b>AECODE</b> apunta a pocos meses gracias a su CAC bajo de comunidad."),
  46:("dato","Por qué los inversionistas aman el software: márgenes brutos de <span class='cx-fig'>70–90%</span> vs. 20–40% de un servicio. El margen decide cuánto puedes reinvertir en crecer."),
  47:("clave","Mide el margen de contribución por pedido <b>incluyendo</b> envío, soporte, devoluciones y descuentos. Muchas startups de delivery «crecieron» perdiendo dinero en cada orden."),
  48:("dato","Métrica de moda (David Sacks): <b>Burn Multiple</b> = caja quemada ÷ ARR nuevo. <span class='cx-fig'>&lt;1</span> es excelente; <span class='cx-fig'>&gt;2</span> es alarma: quemas mucho por cada dólar de ingreso."),
@@ -911,7 +911,7 @@ EXTRAS = {
  97:("anecdota","<b>Facebook</b> compró Instagram por $1.000M (2012, con 13 empleados) y WhatsApp por <span class='cx-fig'>$19.000M</span>. A veces comprar es más barato que competir — y neutraliza la amenaza."),
  98:("clave","La mayoría de exits son <b>adquisiciones</b>, no IPOs. Construye una empresa que valga la pena comprar (producto, equipo, datos, mercado) y el exit llega como consecuencia, no como meta."),
  99:("anecdota","El IPO de <b>Airbnb</b> (dic 2020, en plena pandemia) la valoró en ~<span class='cx-fig'>$47.000M</span> el primer día. Salir a bolsa da capital y liquidez, a cambio de transparencia y escrutinio trimestral."),
- 100:("dato","«Category King» (Play Bigger): quien <b>define</b> una categoría captura ~<span class='cx-fig'>76%</span> de su valor de mercado. No compitas en una casilla — crea el tablero. <b>AECODE</b> apunta a la «capa de capacidad verificable» del sector AEC."),
+ 100:("dato","«Category King» (Play Bigger): quien <b>define</b> una categoría captura ~<span class='cx-fig'>76%</span> de su valor de mercado. No compitas en una casilla — crea el tablero. <b>AECODE</b> apunta a la categoría «adopción tecnológica en AEC»: AEC + e-Learning + IA."),
 }
 
 # ---- emitir intro + conceptos + síntesis por nivel ----
@@ -925,6 +925,29 @@ for L in LEVELS:
         concept(num, L["name"], name, eng, works, analogy, example, ex_tag,
                 formula=formula, extra=EXTRAS.get(num), theme=L["theme"])
     level_synth(L)
+
+# ======================= CASO REAL · AECODE (v4) =======================
+S("dark","Caso real · AECODE","synthwide", f"""
+  {kicker("Caso real · AECODE")}
+  {title('Los 100 conceptos, <span class="grad">aplicados</span>')}
+  <div class="split synth-split">
+    <div class="split-l">{fund_bars([
+      ("2024","13","US$30K","violet"),("2025","37","US$120K","blue"),
+      ("2026E","66","US$220K","green"),("2027","100","US$420K","violet")])}
+      <div class="cap-cap reveal">Ventas anuales · crecimiento <b>×4</b> (2024→2025)</div></div>
+    <div class="split-r">
+      {chip("Aprende · Aplica · Construye mejor")}
+      {bullets([
+        "<b>Problema (02):</b> aprendizaje fragmentado y baja adopción tecnológica en AEC.",
+        "<b>Modelo B2C2B (38):</b> comunidad de profesionales → la empresa lo escala.",
+        "<b>North Star (52):</b> progreso aplicado con evidencia / usuario activo.",
+        "<b>Margen (46):</b> 35% → 47% mejorando el mix (más B2B y On-demand+IA).",
+        "<b>Moat (72):</b> comunidad AEC + datos de adopción + profundidad vertical.",
+      ])}
+      {note('<b>Tracción:</b> 95K+ comunidad · 10K+ estudiantes · 14 países · +100 alianzas · 12+ clientes B2B · 15% ventas internacionales · <b>ask US$125K</b>.')}
+    </div>
+  </div>
+""")
 
 # ======================= RUTA DE DOMINIO =======================
 S("light","Tu ruta de dominio","synthwide", f"""
@@ -950,9 +973,9 @@ S("dark","Cierre","close", f"""
       "Explica cada idea con su analogía: si no puedes, repásala.",
     ])}</div>
     <div class="reveal"><div class="close-h">Aplicado a AECODE</div>{bullets([
-      "Wedge → Engine → Moat como tesis de crecimiento.",
-      "North Star: skills verificadas / usuario activo.",
-      "Unit economics: CAC US$35 · LTV:CAC 3.1× · payback 7m.",
+      "<b>Aprende · Aplica · Construye mejor</b>: adopción tecnológica en AEC.",
+      "Modelo <b>B2C2B</b>: comunidad (95K+) → empresa.",
+      "Tracción: ventas <b>×4</b> (US$30K→120K), margen 35%→47%.",
     ])}</div>
   </div>
   {quote('100 conceptos, una sola disciplina: <span class="grad">enamórate del problema, mide lo que importa y construye lo que nadie pueda copiar.</span>')}
@@ -1004,7 +1027,10 @@ body{background:#05060f;color:#fff;overflow:hidden;font-family:Manrope,"Plus Jak
   opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s var(--ease);overflow:hidden}
 .slide::before{content:"";position:absolute;inset:-12%;z-index:0;
   background:radial-gradient(38% 50% at 14% 12%,var(--mesh-a),transparent 70%),
-             radial-gradient(44% 52% at 88% 90%,var(--mesh-b),transparent 72%)}
+             radial-gradient(44% 52% at 88% 90%,var(--mesh-b),transparent 72%),
+             radial-gradient(62% 40% at 50% -10%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 72%)}
+.slide::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .slide.active{opacity:1;visibility:visible;pointer-events:auto}
 .slide-inner{position:relative;z-index:2;width:100%;height:100%;padding:54px 72px 60px;
   display:flex;flex-direction:column;justify-content:center;gap:16px}
@@ -1129,8 +1155,15 @@ body{background:#05060f;color:#fff;overflow:hidden;font-family:Manrope,"Plus Jak
 .synth-split{align-items:center;gap:30px}
 .dgm{width:100%;display:flex;justify-content:center;align-items:center}
 .card{transition:transform .25s var(--ease),box-shadow .25s var(--ease),opacity .5s var(--ease-out)}
-.card:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(74,58,193,.16)}
-@media (hover:none){.card:hover{transform:none;box-shadow:none}}
+.card:hover{transform:translateY(-3px);box-shadow:0 18px 38px -20px rgba(74,58,193,.45)}
+@media (hover:none){.card:hover{transform:none}}
+/* premium depth + caption */
+.card{box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 16px 36px -28px rgba(10,8,34,.85)}
+.is-light .card{box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 14px 30px -26px rgba(40,30,120,.26)}
+.cap-cap{margin-top:11px;font-size:13px;color:var(--muted);text-align:center} .cap-cap b{color:var(--accent3)}
+.cover-title{text-shadow:0 2px 34px rgba(74,58,193,.22)}
+.div-index{filter:drop-shadow(0 4px 20px color-mix(in srgb,var(--accent) 30%,transparent))}
+.ctrl button{backdrop-filter:blur(14px) saturate(1.25)}
 .li-list{display:flex;flex-wrap:wrap;gap:8px;max-width:94ch;margin-top:8px}
 .li-item{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--fg);
   background:var(--chip-bg);border:1px solid var(--card-line);padding:7px 13px;border-radius:100px}
