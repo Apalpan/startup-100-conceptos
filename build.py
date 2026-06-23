@@ -329,7 +329,7 @@ LEVELS = [
     ("Cliente vs Usuario","quién paga ≠ quién usa",
      "El <b>usuario</b> usa el producto; el <b>cliente</b> es quien paga. A veces coinciden, a veces no, y confundirlos hace que diseñes para uno y cobres al otro mal.",
      "En un colegio el alumno <b>usa</b> la clase, pero el padre la <b>paga</b>. Si solo enamoras al alumno y olvidas al padre, no renuevan.",
-     "<b>AECODE B2C2B:</b> el profesional <i>usa</i> y aprende; la empresa AEC <i>paga</i> por la adopción y la productividad del equipo. Hay que satisfacer a ambos.","AECODE"),
+     "<b>AECODE B2B2C:</b> el profesional <i>usa</i> y aprende; la empresa AEC <i>paga</i> por la adopción y la productividad del equipo. Hay que satisfacer a ambos.","AECODE"),
     ("ICP","ideal customer profile",
      "El <b>perfil de cliente ideal</b>: el tipo de empresa o persona a la que tu producto le calza perfecto, paga bien y se queda. Enfocarte en él multiplica la eficiencia comercial.",
      "Es la talla exacta de zapato: vender a todos es vender tropezando; vender a tu talla es <b>caminar rápido y cómodo</b>.",
@@ -427,7 +427,7 @@ LEVELS = [
     ("Revenue Streams","fuentes de ingreso",
      "Las distintas <b>formas en que entra dinero</b>: venta directa, suscripción, comisión, publicidad, licencias. Diversificarlas con cabeza estabiliza el negocio.",
      "Son los afluentes de un río: <b>varias corrientes</b> alimentando el mismo caudal lo hacen más difícil de secar.",
-     "<b>AECODE</b> combina motores: Live (ticket ~US$200), On-demand + IA y B2B institucional — modelo <b>B2C2B</b>, un solo flywheel con varias entradas de caja.","AECODE"),
+     "<b>AECODE</b> combina motores: Live (ticket ~US$200), On-demand + IA y B2B institucional — modelo <b>B2B2C</b>, un solo flywheel con varias entradas de caja.","AECODE"),
     ("Pricing","estrategia de precio",
      "Cómo <b>fijas el precio</b>: por costo, por competencia o —el correcto— por <b>valor percibido</b>. El precio no es un número, es posicionamiento y filtro de cliente.",
      "El precio es la etiqueta de un vino: el mismo líquido sabe distinto a $10 que a $100. <b>Comunica</b> tanto como cobra.",
@@ -447,7 +447,7 @@ LEVELS = [
     ("B2B · B2C · B2B2C","a quién le vendes",
      "<b>B2C</b> vendes a personas, <b>B2B</b> a empresas, <b>B2B2C</b> una empresa paga/impulsa y el consumidor final usa. Cada uno cambia ciclo de venta, ticket y canal.",
      "B2C es la tienda al público; B2B, el mayorista; B2B2C, la marca que <b>pone sus productos en góndola</b> de otra tienda para llegar a ti.",
-     "<b>AECODE</b> es <b>B2C2B</b>: empieza por el profesional (comunidad + adopción) y, cuando aplica lo aprendido, la empresa lo escala a equipos — comunidad barata + ticket alto.","AECODE"),
+     "<b>AECODE</b> es <b>B2B2C</b>: empieza por el profesional (comunidad + adopción) y, cuando aplica lo aprendido, la empresa lo escala a equipos — comunidad barata + ticket alto.","AECODE"),
     ("Take Rate","comisión",
      "El <b>porcentaje que se queda</b> el marketplace de cada transacción. Demasiado alto ahuyenta oferta; demasiado bajo no sostiene el negocio. Es un equilibrio delicado.",
      "Es la propina obligatoria del intermediario: un <b>pedacito de cada trato</b> que pasa por tu plataforma.",
@@ -580,7 +580,7 @@ LEVELS = [
     ("Go-To-Market","estrategia GTM",
      "El <b>plan de cómo llegas al mercado</b>: a qué segmento, por qué canal, con qué mensaje y modelo de venta. Define cómo conviertes producto en clientes.",
      "Es el plan de batalla antes de la invasión: <b>dónde desembarcas</b>, con qué tropas y por qué ruta, no improvisas en la playa.",
-     "<b>AECODE</b> GTM (B2C2B): comunidad orgánica (CAC bajo) → diagnóstico y programas live → casos de adopción → entrada B2B con pilotos y ROI.","AECODE"),
+     "<b>AECODE</b> GTM (B2B2C): comunidad orgánica (CAC bajo) → diagnóstico y programas live → casos de adopción → entrada B2B con pilotos y ROI.","AECODE"),
     ("Inbound · Content","marketing de atracción",
      "<b>Atraer</b> clientes creando contenido útil que resuelve sus dudas, en vez de perseguirlos con anuncios. Construye audiencia, autoridad y un canal propio barato.",
      "Es ser el faro, no el cazador: <b>el barco viene a ti</b> porque emites luz útil, no porque lo persigas en la oscuridad.",
@@ -769,7 +769,7 @@ SYNTH = {
                   ("Recursos","blue"),("Clientes","violet"),("Relación","blue"),
                   ("Canales","green"),("Costos","violet"),("Ingresos","green")]),
      'El modelo conecta <b>a quién sirves</b> con <b>cómo cobras</b>. Pricing, freemium, SaaS o marketplace son distintas formas de capturar el valor que creas.',
-     '<b>Se conecta con:</b> el modelo define tus ingresos, que alimentan los unit economics del Nivel 5. El B2C2B (38) es el modelo de AECODE.'),
+     '<b>Se conecta con:</b> el modelo define tus ingresos, que alimentan los unit economics del Nivel 5. El B2B2C (38) es el modelo de AECODE.'),
  5: ('La pregunta que decide todo: <span class="grad">¿gana cada cliente?</span>',
      scale_compare("US$35","≈US$110","3.1×"),
      'Si el <b>LTV</b> (lo que vale un cliente) supera al <b>CAC</b> (lo que cuesta) por <b>3× o más</b>, el negocio escala sano. Si no, crecer solo multiplica pérdidas.',
@@ -939,7 +939,7 @@ S("dark","Caso real · AECODE","synthwide", f"""
       {chip("Aprende · Aplica · Construye mejor")}
       {bullets([
         "<b>Problema (02):</b> aprendizaje fragmentado y baja adopción tecnológica en AEC.",
-        "<b>Modelo B2C2B (38):</b> comunidad de profesionales → la empresa lo escala.",
+        "<b>Modelo B2B2C (38):</b> comunidad de profesionales → la empresa lo escala.",
         "<b>North Star (52):</b> progreso aplicado con evidencia / usuario activo.",
         "<b>Margen (46):</b> 35% → 47% mejorando el mix (más B2B y On-demand+IA).",
         "<b>Moat (72):</b> comunidad AEC + datos de adopción + profundidad vertical.",
@@ -974,7 +974,7 @@ S("dark","Cierre","close", f"""
     ])}</div>
     <div class="reveal"><div class="close-h">Aplicado a AECODE</div>{bullets([
       "<b>Aprende · Aplica · Construye mejor</b>: adopción tecnológica en AEC.",
-      "Modelo <b>B2C2B</b>: comunidad (95K+) → empresa.",
+      "Modelo <b>B2B2C</b>: comunidad (95K+) → empresa.",
       "Tracción: ventas <b>×4</b> (US$30K→120K), margen 35%→47%.",
     ])}</div>
   </div>
